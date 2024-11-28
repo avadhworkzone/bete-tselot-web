@@ -5,8 +5,10 @@ import 'package:bete_tselot_web/utils/color_utils.dart';
 import 'package:bete_tselot_web/utils/custom_text.dart';
 import 'package:bete_tselot_web/utils/image_utils.dart';
 import 'package:bete_tselot_web/utils/string_utils.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class WebHomeScreen extends StatefulWidget {
   const WebHomeScreen({super.key});
@@ -58,10 +60,13 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
                   child: Column(
                     children: [
                       topDescription(constraints),
+
                       ///how does it work
                       secondDescription(constraints),
+
+                      ///LANGUAGE
                       Padding(
-                        padding: const EdgeInsets.all(40),
+                        padding: EdgeInsets.all(25.w),
                         child: Container(
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
@@ -72,11 +77,92 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
                                     offset: const Offset(0, 10),
                                     blurRadius: 10)
                               ]),
-                          child:constraints.maxWidth<600? bibileView():bibileRowView(),
-
+                          child: constraints.maxWidth < 600
+                              ? commonFeatureView(
+                                  ssImage: AssetUtils.selectLanguageSS,
+                                  image: AssetUtils.selectLanguage,
+                                  title: "Prayer in 5 Languages",
+                                  description:
+                                      "Celebrates unity in spirituality by presenting prayers in Amharic, Ge'ez, Tigrinya, English, and Afaan Oromo. It bridges cultures through faith")
+                              : commonFeatureRowView(
+                                  ssImage: AssetUtils.selectLanguageSS,
+                                  image: AssetUtils.selectLanguage,
+                                  title: "Prayer in 5 Languages",
+                                  description:
+                                      "Celebrates unity in spirituality by presenting prayers in Amharic, Ge'ez, Tigrinya, English, and Afaan Oromo. It bridges cultures through faith",
+                                  isImageOnLeft: true),
                         ),
                       ),
-                      constraints.maxWidth<600?appFeatureView():appFeatureRowView()
+
+                      ///BIBLE
+                      constraints.maxWidth < 600
+                          ? commonFeatureView(
+                              ssImage: AssetUtils.bibleSS,
+                              image: AssetUtils.bible,
+                              title: "The Orthodox Bible",
+                              description:
+                                  "Access your Bible anywhere, anytime. Easily share verses with others and stay connected to your faith.")
+                          : commonFeatureRowView(
+                              ssImage: AssetUtils.bibleSS,
+                              image: AssetUtils.bible,
+                              title: "The Orthodox Bible",
+                              description:
+                                  "Access your Bible anywhere, anytime. Easily share verses with others and stay connected to your faith.",
+                              isImageOnLeft: false),
+
+                      ///AUDIO
+                      Padding(
+                        padding: EdgeInsets.all(25.w),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: const Color(0xfff5f5f5),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    offset: const Offset(0, 10),
+                                    blurRadius: 10)
+                              ]),
+                          child: constraints.maxWidth < 600
+                              ? commonFeatureView(
+                                  ssImage: AssetUtils.audioSS,
+                                  image: AssetUtils.audio,
+                                  title: "Diverse religious audios",
+                                  description:
+                                      "Choose from a diverse selection of peaceful meditations, empowering declarations, guided prayers, worship music and kid’s stories.")
+                              : commonFeatureRowView(
+                                  ssImage: AssetUtils.audioSS,
+                                  image: AssetUtils.audio,
+                                  title: "Diverse religious audios",
+                                  description:
+                                      "Choose from a diverse selection of peaceful meditations, empowering declarations, guided prayers, worship music and kid’s stories.",
+                                  isImageOnLeft: true),
+                        ),
+                      ),
+
+                      ///Customized reminders
+                      constraints.maxWidth < 600
+                          ? commonFeatureView(
+                              ssImage: AssetUtils.reminderSS,
+                              image: AssetUtils.reminder,
+                              title: "Customized reminders",
+                              description:
+                                  "Allow you to set personalized notifications to stay on track with your tasks and goals.")
+                          : commonFeatureRowView(
+                              ssImage: AssetUtils.reminderSS,
+                              image: AssetUtils.reminder,
+                              title: "Customized reminders",
+                              description:
+                                  "Allow you to set personalized notifications to stay on track with your tasks and goals.",
+                              isImageOnLeft: false),
+                      Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: const Color(0xfff5f5f5),
+                          ),
+                          child: constraints.maxWidth < 600
+                              ? appReviewView()
+                              : webReviewView()),
                     ],
                   ),
                 ),
@@ -88,98 +174,134 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
     );
   }
 
-  Padding bibileView() {
+  Padding commonFeatureView(
+      {required String ssImage,
+      required String image,
+      required String title,
+      required String description}) {
     return Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              LocalAssets(
-                                  imagePath: 'assets/images/bibleWeb.png',
-                                  height: 500.w),
-                              SizedBox(height: 50.h,),
-                              Column(
-                                children: [
-                                  LocalAssets(
-                                      imagePath:
-                                          'assets/images/image-bible.png',
-                                      height: 100.w),
-                                  SizedBox(
-                                    height: 50.h,
-                                  ),
-                                  CustomText(
-                                    'Bible & Journaling',
-                                    fontSize: 20.sp,
-                                    letterSpacing: 1.5,
-                                    fontWeight: FontWeight.bold,
-                                    color: ColorUtils.black29,
-                                  ),
-                                  SizedBox(
-                                    height: 20.h,
-                                  ),
-                                  SizedBox(
-                                      width: 300.w,
-                                      child: Center(
-                                          child: CustomText(
-                                        'Access your Bible anywhere, anytime. Highlight favorite verses, add them to your journal, and share with others.',
-                                        textAlign: TextAlign.center,
-                                        fontSize: 16.sp,
-                                        letterSpacing: 1.5,
-                                        fontWeight: FontWeight.w400,
-                                        color: ColorUtils.black29,
-                                      ))),
-                                ],
-                              ),
-                            ],
-                          ),
-                        );
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          LocalAssets(imagePath: ssImage, height: 500.w),
+          SizedBox(
+            height: 50.h,
+          ),
+          Column(
+            children: [
+              LocalAssets(imagePath: image, height: 100.w),
+              SizedBox(
+                height: 50.h,
+              ),
+              CustomText(
+                title,
+                fontSize: 20.sp,
+                letterSpacing: 1.5,
+                fontWeight: FontWeight.bold,
+                color: ColorUtils.black29,
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+              SizedBox(
+                  width: 300.w,
+                  child: Center(
+                      child: CustomText(
+                    description,
+                    textAlign: TextAlign.center,
+                    fontSize: 16.sp,
+                    letterSpacing: 1.5,
+                    fontWeight: FontWeight.w400,
+                    color: ColorUtils.black29,
+                  ))),
+            ],
+          ),
+        ],
+      ),
+    );
   }
-  Padding bibileRowView() {
+
+  Padding commonFeatureRowView(
+      {required String ssImage,
+      required String image,
+      required String title,
+      required String description,
+      required bool isImageOnLeft}) {
     return Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              LocalAssets(
-                                  imagePath: 'assets/images/bibleWeb.png',
-                                  height: 500.w),
-                              Column(
-                                children: [
-                                  LocalAssets(
-                                      imagePath:
-                                          'assets/images/image-bible.png',
-                                      height: 100.w),
-                                  SizedBox(
-                                    height: 50.h,
-                                  ),
-                                  CustomText(
-                                    'Bible & Journaling',
-                                    fontSize: 20.sp,
-                                    letterSpacing: 1.5,
-                                    fontWeight: FontWeight.bold,
-                                    color: ColorUtils.black29,
-                                  ),
-                                  SizedBox(
-                                    height: 20.h,
-                                  ),
-                                  SizedBox(
-                                      width: 300.w,
-                                      child: Center(
-                                          child: CustomText(
-                                        'Access your Bible anywhere, anytime. Highlight favorite verses, add them to your journal, and share with others.',
-                                        textAlign: TextAlign.center,
-                                        fontSize: 16.sp,
-                                        letterSpacing: 1.5,
-                                        fontWeight: FontWeight.w400,
-                                        color: ColorUtils.black29,
-                                      ))),
-                                ],
-                              ),
-                            ],
-                          ),
-                        );
+      padding: const EdgeInsets.all(20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: isImageOnLeft
+            ? [
+                LocalAssets(imagePath: ssImage, height: 500.w),
+                Column(
+                  children: [
+                    LocalAssets(imagePath: image, height: 120.w),
+                    SizedBox(
+                      height: 50.h,
+                    ),
+                    CustomText(
+                      title,
+                      fontSize: 20.sp,
+                      letterSpacing: 1.5,
+                      fontWeight: FontWeight.bold,
+                      color: ColorUtils.black29,
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    SizedBox(
+                        width: 300.w,
+                        child: Center(
+                            child: CustomText(
+                          description,
+                          textAlign: TextAlign.center,
+                          fontSize: 16.sp,
+                          letterSpacing: 1.5,
+                          fontWeight: FontWeight.w400,
+                          color: ColorUtils.black29,
+                        ))),
+                  ],
+                ),
+              ]
+            : [
+                Column(
+                  children: [
+                    LocalAssets(imagePath: image, height: 120.w),
+                    SizedBox(
+                      height: 50.h,
+                    ),
+                    CustomText(
+                      title,
+                      fontSize: 20.sp,
+                      letterSpacing: 1.5,
+                      fontWeight: FontWeight.bold,
+                      color: ColorUtils.black29,
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    SizedBox(
+                        width: 300.w,
+                        child: Center(
+                            child: CustomText(
+                          description,
+                          textAlign: TextAlign.center,
+                          fontSize: 16.sp,
+                          letterSpacing: 1.5,
+                          fontWeight: FontWeight.w400,
+                          color: ColorUtils.black29,
+                        ))),
+                  ],
+                ),
+                LocalAssets(imagePath: ssImage, height: 500.w),
+              ],
+      ),
+    );
   }
+
   Widget appFeatureRowView() {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -188,8 +310,7 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
           child: Column(
             children: [
               LocalAssets(
-                  imagePath: 'assets/images/frature.png',
-                  height: 100.w),
+                  imagePath: 'assets/images/frature.png', height: 100.w),
               SizedBox(
                 height: 50.h,
               ),
@@ -210,70 +331,72 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
-
-
               CustomText(
-                                                  '1. Prayer in 5 Languages',
+                '1. Prayer in 5 Languages',
                 textAlign: TextAlign.center,
                 fontSize: 16.sp,
                 letterSpacing: 1.5,
                 fontWeight: FontWeight.w400,
                 color: ColorUtils.blackColor,
-                                                ),
+              ),
               SizedBox(
                 height: 20.h,
-              ),CustomText(
-                                                  '2. The Orthodox Bible',
-                                                  textAlign: TextAlign.center,
-                                                  fontSize: 16.sp,
-                                                  letterSpacing: 1.5,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: ColorUtils.blackColor,
-                                                ),SizedBox(
+              ),
+              CustomText(
+                '2. The Orthodox Bible',
+                textAlign: TextAlign.center,
+                fontSize: 16.sp,
+                letterSpacing: 1.5,
+                fontWeight: FontWeight.w400,
+                color: ColorUtils.blackColor,
+              ),
+              SizedBox(
                 height: 20.h,
-              ),CustomText(
-                                                  '3. Diverse Religious audios',
-                                                  textAlign: TextAlign.center,
-                                                  fontSize: 16.sp,
-                                                  letterSpacing: 1.5,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: ColorUtils.blackColor,
-                                                ),SizedBox(
+              ),
+              CustomText(
+                '3. Diverse Religious audios',
+                textAlign: TextAlign.center,
+                fontSize: 16.sp,
+                letterSpacing: 1.5,
+                fontWeight: FontWeight.w400,
+                color: ColorUtils.blackColor,
+              ),
+              SizedBox(
                 height: 20.h,
-              ),CustomText(
-                                                  '4. Customised reminders',
-                                                  textAlign: TextAlign.center,
-                                                  fontSize: 16.sp,
-                                                  letterSpacing: 1.5,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: ColorUtils.blackColor,
-                                                ),SizedBox(
+              ),
+              CustomText(
+                '4. Customised reminders',
+                textAlign: TextAlign.center,
+                fontSize: 16.sp,
+                letterSpacing: 1.5,
+                fontWeight: FontWeight.w400,
+                color: ColorUtils.blackColor,
+              ),
+              SizedBox(
                 height: 20.h,
-              ),CustomText(
-                                                  'Much More....',
-                                                  textAlign: TextAlign.center,
-                                                  fontSize: 16.sp,
-                                                  letterSpacing: 1.5,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: ColorUtils.blackColor,
-                                                ),
-
+              ),
+              CustomText(
+                'Much More....',
+                textAlign: TextAlign.center,
+                fontSize: 16.sp,
+                letterSpacing: 1.5,
+                fontWeight: FontWeight.bold,
+                color: ColorUtils.blackColor,
+              ),
             ],
           ),
         ),
       ],
     );
   }
+
   Widget appFeatureView() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Column(
           children: [
-            LocalAssets(
-                imagePath: 'assets/images/frature.png',
-                height: 100.w),
+            LocalAssets(imagePath: 'assets/images/frature.png', height: 100.w),
             SizedBox(
               height: 50.h,
             ),
@@ -292,55 +415,387 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-
-
             CustomText(
-                                                '1. Prayer in 5 Languages',
+              '1. Prayer in 5 Languages',
               textAlign: TextAlign.center,
               fontSize: 16.sp,
               letterSpacing: 1.5,
               fontWeight: FontWeight.w400,
               color: ColorUtils.blackColor,
-                                              ),
+            ),
             SizedBox(
               height: 20.h,
-            ),CustomText(
-                                                '2. The Orthodox Bible',
-                                                textAlign: TextAlign.center,
-                                                fontSize: 16.sp,
-                                                letterSpacing: 1.5,
-                                                fontWeight: FontWeight.w400,
-                                                color: ColorUtils.blackColor,
-                                              ),SizedBox(
+            ),
+            CustomText(
+              '2. The Orthodox Bible',
+              textAlign: TextAlign.center,
+              fontSize: 16.sp,
+              letterSpacing: 1.5,
+              fontWeight: FontWeight.w400,
+              color: ColorUtils.blackColor,
+            ),
+            SizedBox(
               height: 20.h,
-            ),CustomText(
-                                                '3. Diverse Religious audios',
-                                                textAlign: TextAlign.center,
-                                                fontSize: 16.sp,
-                                                letterSpacing: 1.5,
-                                                fontWeight: FontWeight.w400,
-                                                color: ColorUtils.blackColor,
-                                              ),SizedBox(
+            ),
+            CustomText(
+              '3. Diverse Religious audios',
+              textAlign: TextAlign.center,
+              fontSize: 16.sp,
+              letterSpacing: 1.5,
+              fontWeight: FontWeight.w400,
+              color: ColorUtils.blackColor,
+            ),
+            SizedBox(
               height: 20.h,
-            ),CustomText(
-                                                '4. Customised reminders',
-                                                textAlign: TextAlign.center,
-                                                fontSize: 16.sp,
-                                                letterSpacing: 1.5,
-                                                fontWeight: FontWeight.w400,
-                                                color: ColorUtils.blackColor,
-                                              ),SizedBox(
+            ),
+            CustomText(
+              '4. Customised reminders',
+              textAlign: TextAlign.center,
+              fontSize: 16.sp,
+              letterSpacing: 1.5,
+              fontWeight: FontWeight.w400,
+              color: ColorUtils.blackColor,
+            ),
+            SizedBox(
               height: 20.h,
-            ),CustomText(
-                                                'Much More....',
-                                                textAlign: TextAlign.center,
-                                                fontSize: 16.sp,
-                                                letterSpacing: 1.5,
-                                                fontWeight: FontWeight.bold,
-                                                color: ColorUtils.blackColor,
-                                              ),
+            ),
+            CustomText(
+              'Much More....',
+              textAlign: TextAlign.center,
+              fontSize: 16.sp,
+              letterSpacing: 1.5,
+              fontWeight: FontWeight.bold,
+              color: ColorUtils.blackColor,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+  final List<Map<String, String>> testimonials = [
+    {
+      'name': 'Yared M.',
+      'stars': '★★★★★',
+      'feedback':
+      'I am super pleased with this app. I wish there is 10 stars to give. Ethiopian Orthodox Church is lucky to have you guys, I am just speechless for the effort you guys put in. Well done! I am so immersed with the liturgy I felt like I am inside the church. Kibre yegebachehual tsegawn yebzalachu. If people want to give back some please add a support link. I am in for that and will be glad to be the first one.',
+    },
+    {
+      'name': 'Jape Y.',
+      'stars': '★★★★★',
+      'feedback':
+      'I really love this app I dont have words big respect and love for the creater its a nice way to get closer with God and know our religion well',
+    },
+    {
+      'name': 'Bereket A.',
+      'stars': '★★★★★',
+      'feedback':
+      'I\'ve gotten the blessing of the Almighty God through your hard work of this precious app. May God the Almighty bless you & give you more wisdom of Solomon.',
+    },
+    {
+      'name': 'Ab N.',
+      'stars': '★★★★★',
+      'feedback':
+      'This is a great app. I love that it encompasses the daily prayers along with the daily psalms. I would love to see a double tap to add quotes to a favorites tab feature to keep verses we have connected with on that day. God bless you!',
+    },
+    {
+      'name': 'Zekarias G.',
+      'stars': '★★★★★',
+      'feedback':
+      'Thank you for developing the "Bete Tselot" app. It is incredibly helpful and valuable for spiritual growth. The app is easy to use, unlike similar ones, and the language options help many learn prayers in different languages. The simple forms of prayers will aid Christians, especially Orthodox Tewahdo, in their spiritual journey. Please consider breaking down the Holy Bible in the simplest form for daily study to help Christians fall in love with the word of God. Thank you & stay blessed',
+    },
+    {
+      'name': 'Semi K.',
+      'stars': '★★★★★',
+      'feedback':
+      'I am glad that I\'m able to use this app wherever I travel away from home and Orthodox churches. It\'s all in One, Kidase and prayer book. Thank you!',
+    },
+    {
+      'name': 'Eden B.',
+      'stars': '★★★★★',
+      'feedback':
+      'Thank you so much. God bless you. It is an amazing app. I know even foreigners who are exercising to follow the Ethiopian Orthodox Tewahedo religion are using this app and found it really helpful.',
+    },
+    {
+      'name': 'Paula U.',
+      'stars': '★★★★★',
+      'feedback':
+      'I love this app. It\'s so simple and broken down so nicely, I can really focus on the Word. I love the reflection part of the devotional as it helps me to really sync with God. This app has changed my daily routine for the better!',
+    },
+  ];
+  Widget webReviewView() {
+    return Padding(
+      padding:  EdgeInsets.only(top: 50.w),
+      child: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              LocalAssets(
+                imagePath: AssetUtils.leftBranch,
+                height: 160.w,
+              ),
+              SizedBox(width: 20.w,),
+              Column(
+                children: [
+                  CustomText(
+                    'Your REVIEWS',
+                    fontSize: 15.sp,
+                    letterSpacing: 1.5,
+                    fontWeight: FontWeight.bold,
+                    color: ColorUtils.grey99,
+                  ),
+                  SizedBox(height: 10.w,),
+                  CustomText(
+                    'Trusted by thousands',
+                    fontSize: 24.sp,
+                    fontFamily: FontUtils.poppins,
+                    fontWeight: FontWeight.bold,
+                    color: ColorUtils.black29,
+                  ),
+                  SizedBox(height: 10.w,),
+                  RichText(
+                    text: TextSpan(
+                      text: '4.9',
+                      style: TextStyle(
+                        fontSize: 40.sp,
+                        fontWeight: FontWeight.w800,
+                        color: ColorUtils.primaryColor,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: ' out of 5',
+                          style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            color: ColorUtils.greyaa,
 
+                            fontSize: 12.sp
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 10.w,),
+                  CustomText(
+                    '600,000+ ratings. Here are just some of the kind words we\nhave received.',
+                    fontSize: 14.sp,
+                    textAlign: TextAlign.center,
+                    fontFamily: FontUtils.poppins,
+                    fontWeight: FontWeight.normal,
+                    color: ColorUtils.black77,
+                  ),
+
+                ],
+              ),
+              SizedBox(width: 20.w,),
+              LocalAssets(
+                imagePath: AssetUtils.rightBranch,
+                height: 160.w,
+              ),
+            ],
+          ),
+      SizedBox(height: 20.h,),
+      SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children:
+          List.generate(
+            testimonials.length,
+                (index) =>
+                SizedBox(
+                  width: 350.w,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                                color: ColorUtils.grey2a.withOpacity(0.2),
+                                offset: Offset(0, 10),
+                                blurRadius: 10)
+                          ]),
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                           Row(
+                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                             children: [
+                               Row(
+                                 children: List.generate(5, (index) {
+                                   return Icon(Icons.star,color: ColorUtils.primaryColor,);
+                                 },),
+                               ),
+                               CustomText(testimonials[index]['name'] ?? "",fontWeight: FontWeight.bold,)
+                             ],
+                           ),
+                            SizedBox(height: 8.w,),
+                            CustomText(testimonials[index]['feedback'] ?? "",fontSize: 12.sp,)
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+          ),
+        ),
+      ),
+      // CarouselSlider(
+      //   items:
+      //   testimonials.map((testimonial) {
+      //     return Container(
+      //       padding: const EdgeInsets.all(16),
+      //       margin: const EdgeInsets.symmetric(horizontal: 8),
+      //       decoration: BoxDecoration(
+      //         color: Colors.white,
+      //         borderRadius: BorderRadius.circular(12),
+      //         boxShadow: [
+      //           BoxShadow(
+      //             color: Colors.grey.withOpacity(0.5),
+      //             spreadRadius: 2,
+      //             blurRadius: 5,
+      //             offset: const Offset(0, 3),
+      //           ),
+      //         ],
+      //       ),
+      //       child: Text(
+      //         testimonial,
+      //         style: const TextStyle(fontSize: 16),
+      //         textAlign: TextAlign.center,
+      //       ),
+      //     );
+      //   }).toList(),
+      //   options: CarouselOptions(
+      //     // aspectRatio: 16 / 6, // Adjust aspect ratio as needed
+      //     viewportFraction: 0.1, // Adjust the visible fraction of items
+      //     initialPage: 0,
+      //     enableInfiniteScroll: true,
+      //     autoPlay: false,
+      //     autoPlayInterval: const Duration(seconds: 3),
+      //     autoPlayAnimationDuration: const Duration(milliseconds: 800),
+      //     autoPlayCurve: Curves.fastOutSlowIn,
+      //     enlargeCenterPage: false,
+      //     scrollDirection: Axis.horizontal,
+      //   ),
+      // ),
+      //     // CarouselSlider(
+      //     //     items: [
+      //     //       Container(
+      //     //         // width: 250,
+      //     //         color: Colors.red,
+      //     //         child: Text("hjzghjxbcbxzh bxjkbjkvbj njkxcnjkv nvxjkcbgjkv mnjcxjkv nxjkcv"),
+      //     //       )
+      //     //     ],
+      //     //     options: CarouselOptions(
+      //     //       aspectRatio: 16/2,
+      //     //       viewportFraction:
+      //     //       0.1,
+      //     //       initialPage: 0,
+      //     //       enableInfiniteScroll: true,
+      //     //       reverse: false,
+      //     //       autoPlay: false,
+      //     //       autoPlayInterval:
+      //     //       const Duration(seconds: 3),
+      //     //       autoPlayAnimationDuration:
+      //     //       const Duration(milliseconds: 800),
+      //     //       autoPlayCurve: Curves.fastOutSlowIn,
+      //     //       enlargeCenterPage: false,
+      //     //       // enlargeFactor: 0.3,
+      //     //       onPageChanged: (index, reason) {
+      //     //         /*setState(() {
+      //     //               _currentIndex = index;
+      //     //             });*/
+      //     //       },
+      //     //       scrollDirection: Axis.horizontal,
+      //     //     )),
+        ],
+      ),
+    );
+  }
+
+  Widget appReviewView() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Column(
+          children: [
+            LocalAssets(imagePath: 'assets/images/frature.png', height: 100.w),
+            SizedBox(
+              height: 50.h,
+            ),
+            CustomText(
+              'Our App Features',
+              fontSize: 24.sp,
+              letterSpacing: 1.5,
+              fontWeight: FontWeight.bold,
+              color: ColorUtils.grey99,
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+          ],
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomText(
+              '1. Prayer in 5 Languages',
+              textAlign: TextAlign.center,
+              fontSize: 16.sp,
+              letterSpacing: 1.5,
+              fontWeight: FontWeight.w400,
+              color: ColorUtils.blackColor,
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+            CustomText(
+              '2. The Orthodox Bible',
+              textAlign: TextAlign.center,
+              fontSize: 16.sp,
+              letterSpacing: 1.5,
+              fontWeight: FontWeight.w400,
+              color: ColorUtils.blackColor,
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+            CustomText(
+              '3. Diverse Religious audios',
+              textAlign: TextAlign.center,
+              fontSize: 16.sp,
+              letterSpacing: 1.5,
+              fontWeight: FontWeight.w400,
+              color: ColorUtils.blackColor,
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+            CustomText(
+              '4. Customised reminders',
+              textAlign: TextAlign.center,
+              fontSize: 16.sp,
+              letterSpacing: 1.5,
+              fontWeight: FontWeight.w400,
+              color: ColorUtils.blackColor,
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+            CustomText(
+              'Much More....',
+              textAlign: TextAlign.center,
+              fontSize: 16.sp,
+              letterSpacing: 1.5,
+              fontWeight: FontWeight.bold,
+              color: ColorUtils.blackColor,
+            ),
           ],
         ),
       ],
@@ -351,76 +806,21 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
     return Column(
       children: [
         howDoesItWorks(),
-         constraints.maxWidth>600?
-           prayerList():prayerListColumn(),
+        // constraints.maxWidth>600?
+        //   prayerList():prayerListColumn(),
       ],
     );
   }
 
   Row prayerList() {
     return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: List.generate(
-          createYourDailyWorkShipList.length,
-          (index) => Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                          color: ColorUtils.grey2a.withOpacity(0.2),
-                          offset: Offset(0, 10),
-                          blurRadius: 10)
-                    ]),
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CustomText(
-                        createYourDailyWorkShipList[index]['title'],
-                        fontSize: 18.sp,
-                        letterSpacing: 1.5,
-                        fontWeight: FontWeight.bold,
-                        color: ColorUtils.grey99,
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      Image.asset(
-                        createYourDailyWorkShipList[index]['icon'],
-                        height: 75.w,
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      CustomText(
-                        createYourDailyWorkShipList[index]['value'],
-                        textAlign: TextAlign.center,
-                        fontSize: 16.sp,
-                        letterSpacing: 1.5,
-                        fontWeight: FontWeight.w400,
-                        color: ColorUtils.black29,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
-  }
-  Column prayerListColumn() {
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: List.generate(
-          createYourDailyWorkShipList.length,
-          (index) => Padding(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children:
+      List.generate(
+        createYourDailyWorkShipList.length,
+        (index) =>
+            Expanded(
+          child: Padding(
             padding: const EdgeInsets.all(20),
             child: Container(
               decoration: BoxDecoration(
@@ -469,7 +869,65 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
             ),
           ),
         ),
-      );
+      ),
+    );
+  }
+
+  Column prayerListColumn() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(
+        createYourDailyWorkShipList.length,
+        (index) => Padding(
+          padding: const EdgeInsets.all(20),
+          child: Container(
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                      color: ColorUtils.grey2a.withOpacity(0.2),
+                      offset: Offset(0, 10),
+                      blurRadius: 10)
+                ]),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CustomText(
+                    createYourDailyWorkShipList[index]['title'],
+                    fontSize: 18.sp,
+                    letterSpacing: 1.5,
+                    fontWeight: FontWeight.bold,
+                    color: ColorUtils.grey99,
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Image.asset(
+                    createYourDailyWorkShipList[index]['icon'],
+                    height: 75.w,
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  CustomText(
+                    createYourDailyWorkShipList[index]['value'],
+                    textAlign: TextAlign.center,
+                    fontSize: 16.sp,
+                    letterSpacing: 1.5,
+                    fontWeight: FontWeight.w400,
+                    color: ColorUtils.black29,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   Padding topBar() {
@@ -534,7 +992,6 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
           SizedBox(
             width: 20.w,
           ),
-
           CustomHoverButton(
             text: StringUtils.downloadNow,
             onPressed: () {
@@ -685,16 +1142,16 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             LocalAssets(
-                          imagePath: AssetUtils.appStore,
-                          height: 50.w,
-                        ),
+              imagePath: AssetUtils.appStore,
+              height: 50.w,
+            ),
             SizedBox(
               width: 20.w,
             ),
             LocalAssets(
-                          imagePath: AssetUtils.playStore,
-                          height: 50.w,
-                        ),
+              imagePath: AssetUtils.playStore,
+              height: 50.w,
+            ),
           ],
         ),
       ],

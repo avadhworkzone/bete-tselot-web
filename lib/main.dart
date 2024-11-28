@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:bete_tselot_web/utils/image_utils.dart';
 import 'package:bete_tselot_web/view/mobile/home_screen.dart';
 import 'package:bete_tselot_web/view/web/web_home_screen.dart';
@@ -18,11 +20,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return LayoutBuilder(builder: (context, constraints) {
-      if(constraints.maxWidth>650){
+      if(constraints.maxWidth>600){
         ///web
         return ScreenUtilInit(
           designSize: const Size(1466, 932),
           child: GetMaterialApp(
+            scrollBehavior: MyCustomScrollBehavior(),
             title: 'bete-tselot',
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
@@ -52,4 +55,14 @@ class MyApp extends StatelessWidget {
       }
     }, );
   }
+}
+
+
+class MyCustomScrollBehavior extends MaterialScrollBehavior {
+  // Override behavior methods and getters like dragDevices
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+    PointerDeviceKind.touch,
+    PointerDeviceKind.mouse,
+  };
 }

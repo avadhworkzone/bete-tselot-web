@@ -13,6 +13,16 @@ class AssetUtils {
   static String playStore = '${imagePath}play_store_white.png';
   static String homeSS = '${imagePath}home_ss.png';
   static String prayerImg = '${imagePath}prayer_img.png';
+  static String selectLanguageSS = '${imagePath}select_language_ss.png';
+  static String selectLanguage = '${imagePath}select_language.png';
+  static String bible = '${imagePath}image-bible.png';
+  static String bibleSS = '${imagePath}bible_ss.png';
+  static String audio = '${imagePath}audio.png';
+  static String audioSS = '${imagePath}audio_ss.png';
+  static String reminder = '${imagePath}reminder.png';
+  static String reminderSS = '${imagePath}reminder_ss.png';
+  static String leftBranch = '${imagePath}left_branch.png';
+  static String rightBranch = '${imagePath}right_branch.png';
 }
 
 class IconUtils {
