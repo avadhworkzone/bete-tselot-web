@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../CommonWidgets/hover_button.dart';
+import '../../CommonWidgets/hover_button.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -24,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       backgroundColor: ColorUtils.whiteColor,
      body: Column(
        children: [
@@ -124,6 +125,18 @@ class _HomeScreenState extends State<HomeScreen> {
                      )
                    ],
                  ),
+                 SizedBox(height: 60.h,),
+                 CustomText(StringUtils.howDoesItWork,fontSize: 22 .sp,letterSpacing : 1.5,fontWeight: FontWeight.bold,color: ColorUtils.grey99,),
+                 SizedBox(height: 25.h,),
+                 CustomText(StringUtils.createYourDailyWorshipHabit,fontSize: 40.sp,fontWeight: FontWeight.bold,color: ColorUtils.black29,textAlign: TextAlign.center,),
+                 SizedBox(height: 25.h,),
+                 CustomText(StringUtils.growYourFaith,fontSize: 20.sp,fontWeight: FontWeight.normal,color: ColorUtils.black29,textAlign: TextAlign.center,),
+                 SizedBox(height: 40.h,),
+                 LocalAssets(imagePath: AssetUtils.prayerImg,height: 320.w,width: 400.w,boxFit: BoxFit.fill,),
+                 SizedBox(height: 10.w,),
+                 CustomText(StringUtils.prayer,fontSize: 25.sp,fontWeight: FontWeight.bold,color: ColorUtils.black29,textAlign: TextAlign.center,),
+                 CustomText(StringUtils.connectWithGodAndYourCommunity,fontSize: 20.sp,fontWeight: FontWeight.normal,color: ColorUtils.grey99,textAlign: TextAlign.center,),
+                 SizedBox(height: 200.h,),
                ],
              ),
            ),

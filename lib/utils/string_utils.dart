@@ -5,4 +5,9 @@ class StringUtils{
   static const  contact = "CONTACT";
   static const  home = "HOME";
   static const  downloadNow = "DOWNLOAD NOW";
+  static const  howDoesItWork = "HOW DOES IT WORK?";
+  static const  createYourDailyWorshipHabit = "Create your Daily\nWorship habit";
+  static const  growYourFaith = "Grow your faith with daily devotionals and\nChristian meditations";
+  static const  prayer = "PRAYER";
+  static const  connectWithGodAndYourCommunity = "Connect with God and your community through prayer";
 }

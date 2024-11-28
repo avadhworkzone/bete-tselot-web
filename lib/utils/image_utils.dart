@@ -12,6 +12,7 @@ class AssetUtils {
   static String appStore = '${imagePath}app_store_white.png';
   static String playStore = '${imagePath}play_store_white.png';
   static String homeSS = '${imagePath}home_ss.png';
+  static String prayerImg = '${imagePath}prayer_img.png';
 }
 
 class IconUtils {
