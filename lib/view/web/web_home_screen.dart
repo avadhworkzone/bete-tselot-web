@@ -1,13 +1,18 @@
 import 'package:bete_tselot_web/CommonWidgets/common_assets.dart';
+import 'package:bete_tselot_web/CommonWidgets/custom_textfield.dart';
 import 'package:bete_tselot_web/CommonWidgets/hover_button.dart';
 import 'package:bete_tselot_web/CommonWidgets/mouse_region_underline.dart';
+import 'package:bete_tselot_web/routs/routs.dart';
 import 'package:bete_tselot_web/utils/color_utils.dart';
 import 'package:bete_tselot_web/utils/custom_text.dart';
 import 'package:bete_tselot_web/utils/image_utils.dart';
 import 'package:bete_tselot_web/utils/string_utils.dart';
+import 'package:bete_tselot_web/view/web/web_top_bar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class WebHomeScreen extends StatefulWidget {
@@ -18,8 +23,10 @@ class WebHomeScreen extends StatefulWidget {
 }
 
 class _WebHomeScreenState extends State<WebHomeScreen> {
-  bool isTapOnHome = true;
-  bool isTapOnContact = false;
+
+  TextEditingController firstnameController = TextEditingController();
+  TextEditingController lastnameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   List<Map<String, dynamic>> createYourDailyWorkShipList = [
     {
       "title": 'DAILY PASSAGE',
@@ -52,7 +59,7 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
           return Column(
             children: [
               ///top bar
-              topBar(),
+              WebTopBar(isFromContact: false, isFromHome: true,),
 
               ///bottom View
               Expanded(
@@ -60,10 +67,8 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
                   child: Column(
                     children: [
                       topDescription(constraints),
-
                       ///how does it work
                       secondDescription(constraints),
-
                       ///LANGUAGE
                       Padding(
                         padding: EdgeInsets.all(25.w),
@@ -93,7 +98,6 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
                                   isImageOnLeft: true),
                         ),
                       ),
-
                       ///BIBLE
                       constraints.maxWidth < 600
                           ? commonFeatureView(
@@ -155,6 +159,7 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
                               description:
                                   "Allow you to set personalized notifications to stay on track with your tasks and goals.",
                               isImageOnLeft: false),
+                      ///App Review
                       Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
@@ -163,6 +168,10 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
                           child: constraints.maxWidth < 600
                               ? appReviewView()
                               : webReviewView()),
+                       ///Sign Up
+                      constraints.maxWidth < 600 ? appSignUpView() : webSignUpView(),
+                      ///Footer
+                      constraints.maxWidth < 600 ? webFooter() : webFooter(),
                     ],
                   ),
                 ),
@@ -171,6 +180,227 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
           );
         },
       ),
+    );
+  }
+
+  Padding webSignUpView() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 60.w, vertical: 50.w),
+      child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: const Color(0xfff5f5f5),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.grey.withOpacity(0.3),
+                    offset: const Offset(0, 10),
+                    blurRadius: 10)
+              ]),
+          child: Padding(
+            padding: EdgeInsets.all(50.w),
+            child: Column(
+              children: [
+                CustomText(
+                  "Sign up to receive latest product\nnews, exclusive content & more!",
+                  fontSize: 24.sp,
+                  fontWeight: FontWeight.bold,
+                  color: ColorUtils.black29,
+                ),
+                SizedBox(
+                  height: 20.w,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                       Expanded(
+                          child: CommonTextField(
+                            textEditController: firstnameController,
+                        hintText: "First Name",
+                      )),
+                      SizedBox(
+                        width: 20.w,
+                      ),
+                       Expanded(
+                          child: CommonTextField(
+                            textEditController: lastnameController,
+                        hintText: "Last Name",
+                      )),
+                      SizedBox(
+                        width: 20.w,
+                      ),
+                       Expanded(
+                          child: CommonTextField(
+                            textEditController: emailController,
+                        hintText: "E-mail address",
+                      )),
+
+                      // Signup Button
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 30.w,
+                ),
+                CustomHoverButton(
+                  text: StringUtils.signUp,
+                  color: Colors.blue.shade700.withOpacity(0.7),
+                  hoverColor: Colors.blue.shade700.withOpacity(0.9),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 70.w, vertical: 10.w),
+                  onPressed: () {
+                    if(firstnameController.text.isEmpty || lastnameController.text.isEmpty|| emailController.text.isEmpty){
+                      Fluttertoast.showToast(
+                          msg: "All Fields are required",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 2,
+                          // webBgColor: Colors.red,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          webBgColor: "linear-gradient(to right, #BB352E, #BB352E)",
+                          fontSize: 16.0);
+                    }else{
+                      final firstName = firstnameController.text;
+                      final lastName = lastnameController.text;
+                      final email = emailController.text;
+                      addDataToFirestore(firstName,lastName,email);
+                    }
+                  },
+                )
+              ],
+            ),
+          )),
+    );
+  }
+
+  void addDataToFirestore(String firstName, String lastName,String email) async {
+    try {
+      await FirebaseFirestore.instance.collection('users').add({
+        'firstName': firstName,
+        'lastName': lastName,
+        'email': email,
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+      firstnameController.clear();
+      lastnameController.clear();
+      emailController.clear();
+      Fluttertoast.showToast(
+          msg: "Thank you for Sign Up",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 2,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    } catch (e) {
+      firstnameController.clear();
+      lastnameController.clear();
+      emailController.clear();
+      Fluttertoast.showToast(
+          msg: "Something went Wrong",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 2,
+          // webBgColor: Colors.red,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          webBgColor: "linear-gradient(to right, #BB352E, #BB352E)",
+          fontSize: 16.0);
+      print('Error adding data: $e');
+    }
+  }
+
+  Padding appSignUpView() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 60.w, vertical: 50.w),
+      child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: const Color(0xfff5f5f5),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.grey.withOpacity(0.3),
+                    offset: const Offset(0, 10),
+                    blurRadius: 10)
+              ]),
+          child: Padding(
+            padding: EdgeInsets.all(50.w),
+            child: Column(
+              children: [
+                CustomText(
+                  "Sign up to receive latest product\nnews, exclusive content & more!",
+                  fontSize: 24.sp,
+                  fontWeight: FontWeight.bold,
+                  color: ColorUtils.black29,
+                ),
+                SizedBox(
+                  height: 20.w,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                          child: CommonTextField(
+                            textEditController: firstnameController,
+                            hintText: "First Name",
+                          )),
+                      SizedBox(
+                        width: 20.w,
+                      ),
+                      Expanded(
+                          child: CommonTextField(
+                            textEditController: lastnameController,
+                            hintText: "Last Name",
+                          )),
+                      SizedBox(
+                        width: 20.w,
+                      ),
+                      Expanded(
+                          child: CommonTextField(
+                            textEditController: emailController,
+                            hintText: "E-mail address",
+                          )),
+
+                      // Signup Button
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 30.w,
+                ),
+                CustomHoverButton(
+                  text: StringUtils.signUp,
+                  color: Colors.blue.shade700.withOpacity(0.7),
+                  hoverColor: Colors.blue.shade700.withOpacity(0.9),
+                  padding:
+                  EdgeInsets.symmetric(horizontal: 70.w, vertical: 10.w),
+                  onPressed: () {
+                    if(firstnameController.text.isEmpty || lastnameController.text.isEmpty|| emailController.text.isEmpty){
+                      Fluttertoast.showToast(
+                          msg: "All Fields are required",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 2,
+                          // webBgColor: Colors.red,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          webBgColor: "linear-gradient(to right, #BB352E, #BB352E)",
+                          fontSize: 16.0);
+                    }else{
+                      final firstName = firstnameController.text;
+                      final lastName = lastnameController.text;
+                      final email = emailController.text;
+                      addDataToFirestore(firstName,lastName,email);
+                    }
+                  },
+                )
+              ],
+            ),
+          )),
     );
   }
 
@@ -472,59 +702,61 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
       ],
     );
   }
+
   final List<Map<String, String>> testimonials = [
     {
       'name': 'Yared M.',
       'stars': '★★★★★',
       'feedback':
-      'I am super pleased with this app. I wish there is 10 stars to give. Ethiopian Orthodox Church is lucky to have you guys, I am just speechless for the effort you guys put in. Well done! I am so immersed with the liturgy I felt like I am inside the church. Kibre yegebachehual tsegawn yebzalachu. If people want to give back some please add a support link. I am in for that and will be glad to be the first one.',
+          'I am super pleased with this app. I wish there is 10 stars to give. Ethiopian Orthodox Church is lucky to have you guys, I am just speechless for the effort you guys put in. Well done! I am so immersed with the liturgy I felt like I am inside the church. Kibre yegebachehual tsegawn yebzalachu. If people want to give back some please add a support link. I am in for that and will be glad to be the first one.',
     },
     {
       'name': 'Jape Y.',
       'stars': '★★★★★',
       'feedback':
-      'I really love this app I dont have words big respect and love for the creater its a nice way to get closer with God and know our religion well',
+          'I really love this app I dont have words big respect and love for the creater its a nice way to get closer with God and know our religion well',
     },
     {
       'name': 'Bereket A.',
       'stars': '★★★★★',
       'feedback':
-      'I\'ve gotten the blessing of the Almighty God through your hard work of this precious app. May God the Almighty bless you & give you more wisdom of Solomon.',
+          'I\'ve gotten the blessing of the Almighty God through your hard work of this precious app. May God the Almighty bless you & give you more wisdom of Solomon.',
     },
     {
       'name': 'Ab N.',
       'stars': '★★★★★',
       'feedback':
-      'This is a great app. I love that it encompasses the daily prayers along with the daily psalms. I would love to see a double tap to add quotes to a favorites tab feature to keep verses we have connected with on that day. God bless you!',
+          'This is a great app. I love that it encompasses the daily prayers along with the daily psalms. I would love to see a double tap to add quotes to a favorites tab feature to keep verses we have connected with on that day. God bless you!',
     },
     {
       'name': 'Zekarias G.',
       'stars': '★★★★★',
       'feedback':
-      'Thank you for developing the "Bete Tselot" app. It is incredibly helpful and valuable for spiritual growth. The app is easy to use, unlike similar ones, and the language options help many learn prayers in different languages. The simple forms of prayers will aid Christians, especially Orthodox Tewahdo, in their spiritual journey. Please consider breaking down the Holy Bible in the simplest form for daily study to help Christians fall in love with the word of God. Thank you & stay blessed',
+          'Thank you for developing the "Bete Tselot" app. It is incredibly helpful and valuable for spiritual growth. The app is easy to use, unlike similar ones, and the language options help many learn prayers in different languages. The simple forms of prayers will aid Christians, especially Orthodox Tewahdo, in their spiritual journey. Please consider breaking down the Holy Bible in the simplest form for daily study to help Christians fall in love with the word of God. Thank you & stay blessed',
     },
     {
       'name': 'Semi K.',
       'stars': '★★★★★',
       'feedback':
-      'I am glad that I\'m able to use this app wherever I travel away from home and Orthodox churches. It\'s all in One, Kidase and prayer book. Thank you!',
+          'I am glad that I\'m able to use this app wherever I travel away from home and Orthodox churches. It\'s all in One, Kidase and prayer book. Thank you!',
     },
     {
       'name': 'Eden B.',
       'stars': '★★★★★',
       'feedback':
-      'Thank you so much. God bless you. It is an amazing app. I know even foreigners who are exercising to follow the Ethiopian Orthodox Tewahedo religion are using this app and found it really helpful.',
+          'Thank you so much. God bless you. It is an amazing app. I know even foreigners who are exercising to follow the Ethiopian Orthodox Tewahedo religion are using this app and found it really helpful.',
     },
     {
       'name': 'Paula U.',
       'stars': '★★★★★',
       'feedback':
-      'I love this app. It\'s so simple and broken down so nicely, I can really focus on the Word. I love the reflection part of the devotional as it helps me to really sync with God. This app has changed my daily routine for the better!',
+          'I love this app. It\'s so simple and broken down so nicely, I can really focus on the Word. I love the reflection part of the devotional as it helps me to really sync with God. This app has changed my daily routine for the better!',
     },
   ];
+
   Widget webReviewView() {
     return Padding(
-      padding:  EdgeInsets.only(top: 50.w),
+      padding: EdgeInsets.only(top: 50.w),
       child: Column(
         children: [
           Row(
@@ -535,7 +767,9 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
                 imagePath: AssetUtils.leftBranch,
                 height: 160.w,
               ),
-              SizedBox(width: 20.w,),
+              SizedBox(
+                width: 20.w,
+              ),
               Column(
                 children: [
                   CustomText(
@@ -545,15 +779,18 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
                     fontWeight: FontWeight.bold,
                     color: ColorUtils.grey99,
                   ),
-                  SizedBox(height: 10.w,),
+                  SizedBox(
+                    height: 10.w,
+                  ),
                   CustomText(
                     'Trusted by thousands',
                     fontSize: 24.sp,
-                    fontFamily: FontUtils.poppins,
                     fontWeight: FontWeight.bold,
                     color: ColorUtils.black29,
                   ),
-                  SizedBox(height: 10.w,),
+                  SizedBox(
+                    height: 10.w,
+                  ),
                   RichText(
                     text: TextSpan(
                       text: '4.9',
@@ -566,16 +803,16 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
                         TextSpan(
                           text: ' out of 5',
                           style: TextStyle(
-                            fontWeight: FontWeight.normal,
-                            color: ColorUtils.greyaa,
-
-                            fontSize: 12.sp
-                          ),
+                              fontWeight: FontWeight.normal,
+                              color: ColorUtils.greyaa,
+                              fontSize: 12.sp),
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(height: 10.w,),
+                  SizedBox(
+                    height: 10.w,
+                  ),
                   CustomText(
                     '600,000+ ratings. Here are just some of the kind words we\nhave received.',
                     fontSize: 14.sp,
@@ -584,27 +821,28 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
                     fontWeight: FontWeight.normal,
                     color: ColorUtils.black77,
                   ),
-
                 ],
               ),
-              SizedBox(width: 20.w,),
+              SizedBox(
+                width: 20.w,
+              ),
               LocalAssets(
                 imagePath: AssetUtils.rightBranch,
                 height: 160.w,
               ),
             ],
           ),
-      SizedBox(height: 20.h,),
-      SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children:
-          List.generate(
-            testimonials.length,
-                (index) =>
-                SizedBox(
+          SizedBox(
+            height: 20.h,
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: List.generate(
+                testimonials.length,
+                (index) => SizedBox(
                   width: 350.w,
                   child: Padding(
                     padding: const EdgeInsets.all(20),
@@ -624,181 +862,325 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                           Row(
-                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                             children: [
-                               Row(
-                                 children: List.generate(5, (index) {
-                                   return Icon(Icons.star,color: ColorUtils.primaryColor,);
-                                 },),
-                               ),
-                               CustomText(testimonials[index]['name'] ?? "",fontWeight: FontWeight.bold,)
-                             ],
-                           ),
-                            SizedBox(height: 8.w,),
-                            CustomText(testimonials[index]['feedback'] ?? "",fontSize: 12.sp,)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: List.generate(
+                                    5,
+                                    (index) {
+                                      return Icon(
+                                        Icons.star,
+                                        color: ColorUtils.primaryColor,
+                                        size: 20.w,
+                                      );
+                                    },
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 5.w,
+                                ),
+                                Expanded(
+                                    child: CustomText(
+                                  testimonials[index]['name'] ?? "",
+                                  fontWeight: FontWeight.bold,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.end,
+                                ))
+                              ],
+                            ),
+                            SizedBox(
+                              height: 8.w,
+                            ),
+                            CustomText(
+                              testimonials[index]['feedback'] ?? "",
+                              fontSize: 12.sp,
+                            )
                           ],
                         ),
                       ),
                     ),
                   ),
                 ),
+              ),
+            ),
           ),
-        ),
-      ),
-      // CarouselSlider(
-      //   items:
-      //   testimonials.map((testimonial) {
-      //     return Container(
-      //       padding: const EdgeInsets.all(16),
-      //       margin: const EdgeInsets.symmetric(horizontal: 8),
-      //       decoration: BoxDecoration(
-      //         color: Colors.white,
-      //         borderRadius: BorderRadius.circular(12),
-      //         boxShadow: [
-      //           BoxShadow(
-      //             color: Colors.grey.withOpacity(0.5),
-      //             spreadRadius: 2,
-      //             blurRadius: 5,
-      //             offset: const Offset(0, 3),
-      //           ),
-      //         ],
-      //       ),
-      //       child: Text(
-      //         testimonial,
-      //         style: const TextStyle(fontSize: 16),
-      //         textAlign: TextAlign.center,
-      //       ),
-      //     );
-      //   }).toList(),
-      //   options: CarouselOptions(
-      //     // aspectRatio: 16 / 6, // Adjust aspect ratio as needed
-      //     viewportFraction: 0.1, // Adjust the visible fraction of items
-      //     initialPage: 0,
-      //     enableInfiniteScroll: true,
-      //     autoPlay: false,
-      //     autoPlayInterval: const Duration(seconds: 3),
-      //     autoPlayAnimationDuration: const Duration(milliseconds: 800),
-      //     autoPlayCurve: Curves.fastOutSlowIn,
-      //     enlargeCenterPage: false,
-      //     scrollDirection: Axis.horizontal,
-      //   ),
-      // ),
-      //     // CarouselSlider(
-      //     //     items: [
-      //     //       Container(
-      //     //         // width: 250,
-      //     //         color: Colors.red,
-      //     //         child: Text("hjzghjxbcbxzh bxjkbjkvbj njkxcnjkv nvxjkcbgjkv mnjcxjkv nxjkcv"),
-      //     //       )
-      //     //     ],
-      //     //     options: CarouselOptions(
-      //     //       aspectRatio: 16/2,
-      //     //       viewportFraction:
-      //     //       0.1,
-      //     //       initialPage: 0,
-      //     //       enableInfiniteScroll: true,
-      //     //       reverse: false,
-      //     //       autoPlay: false,
-      //     //       autoPlayInterval:
-      //     //       const Duration(seconds: 3),
-      //     //       autoPlayAnimationDuration:
-      //     //       const Duration(milliseconds: 800),
-      //     //       autoPlayCurve: Curves.fastOutSlowIn,
-      //     //       enlargeCenterPage: false,
-      //     //       // enlargeFactor: 0.3,
-      //     //       onPageChanged: (index, reason) {
-      //     //         /*setState(() {
-      //     //               _currentIndex = index;
-      //     //             });*/
-      //     //       },
-      //     //       scrollDirection: Axis.horizontal,
-      //     //     )),
+          // CarouselSlider(
+          //   items:
+          //   testimonials.map((testimonial) {
+          //     return Container(
+          //       padding: const EdgeInsets.all(16),
+          //       margin: const EdgeInsets.symmetric(horizontal: 8),
+          //       decoration: BoxDecoration(
+          //         color: Colors.white,
+          //         borderRadius: BorderRadius.circular(12),
+          //         boxShadow: [
+          //           BoxShadow(
+          //             color: Colors.grey.withOpacity(0.5),
+          //             spreadRadius: 2,
+          //             blurRadius: 5,
+          //             offset: const Offset(0, 3),
+          //           ),
+          //         ],
+          //       ),
+          //       child: Text(
+          //         testimonial,
+          //         style: const TextStyle(fontSize: 16),
+          //         textAlign: TextAlign.center,
+          //       ),
+          //     );
+          //   }).toList(),
+          //   options: CarouselOptions(
+          //     // aspectRatio: 16 / 6, // Adjust aspect ratio as needed
+          //     viewportFraction: 0.1, // Adjust the visible fraction of items
+          //     initialPage: 0,
+          //     enableInfiniteScroll: true,
+          //     autoPlay: false,
+          //     autoPlayInterval: const Duration(seconds: 3),
+          //     autoPlayAnimationDuration: const Duration(milliseconds: 800),
+          //     autoPlayCurve: Curves.fastOutSlowIn,
+          //     enlargeCenterPage: false,
+          //     scrollDirection: Axis.horizontal,
+          //   ),
+          // ),
+          //     // CarouselSlider(
+          //     //     items: [
+          //     //       Container(
+          //     //         // width: 250,
+          //     //         color: Colors.red,
+          //     //         child: Text("hjzghjxbcbxzh bxjkbjkvbj njkxcnjkv nvxjkcbgjkv mnjcxjkv nxjkcv"),
+          //     //       )
+          //     //     ],
+          //     //     options: CarouselOptions(
+          //     //       aspectRatio: 16/2,
+          //     //       viewportFraction:
+          //     //       0.1,
+          //     //       initialPage: 0,
+          //     //       enableInfiniteScroll: true,
+          //     //       reverse: false,
+          //     //       autoPlay: false,
+          //     //       autoPlayInterval:
+          //     //       const Duration(seconds: 3),
+          //     //       autoPlayAnimationDuration:
+          //     //       const Duration(milliseconds: 800),
+          //     //       autoPlayCurve: Curves.fastOutSlowIn,
+          //     //       enlargeCenterPage: false,
+          //     //       // enlargeFactor: 0.3,
+          //     //       onPageChanged: (index, reason) {
+          //     //         /*setState(() {
+          //     //               _currentIndex = index;
+          //     //             });*/
+          //     //       },
+          //     //       scrollDirection: Axis.horizontal,
+          //     //     )),
         ],
       ),
     );
   }
 
   Widget appReviewView() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Column(
-          children: [
-            LocalAssets(imagePath: 'assets/images/frature.png', height: 100.w),
-            SizedBox(
-              height: 50.h,
+    return Padding(
+      padding: EdgeInsets.only(top: 50.w),
+      child: Column(
+        children: [
+          Column(
+            children: [
+              CustomText(
+                'Your REVIEWS',
+                fontSize: 15.sp,
+                letterSpacing: 1.5,
+                fontWeight: FontWeight.bold,
+                color: ColorUtils.grey99,
+              ),
+              SizedBox(
+                height: 10.w,
+              ),
+              CustomText(
+                'Trusted by thousands',
+                fontSize: 24.sp,
+                fontWeight: FontWeight.bold,
+                color: ColorUtils.black29,
+              ),
+              SizedBox(
+                height: 10.w,
+              ),
+              RichText(
+                text: TextSpan(
+                  text: '4.9',
+                  style: TextStyle(
+                    fontSize: 40.sp,
+                    fontWeight: FontWeight.w800,
+                    color: ColorUtils.primaryColor,
+                  ),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: ' out of 5',
+                      style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                          color: ColorUtils.greyaa,
+                          fontSize: 12.sp),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 10.w,
+              ),
+              CustomText(
+                '600,000+ ratings. Here are just some of the kind words we\nhave received.',
+                fontSize: 14.sp,
+                textAlign: TextAlign.center,
+                fontFamily: FontUtils.poppins,
+                fontWeight: FontWeight.normal,
+                color: ColorUtils.black77,
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 20.h,
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: List.generate(
+                testimonials.length,
+                (index) => SizedBox(
+                  width: 350.w,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                                color: ColorUtils.grey2a.withOpacity(0.2),
+                                offset: Offset(0, 10),
+                                blurRadius: 10)
+                          ]),
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: List.generate(
+                                    5,
+                                    (index) {
+                                      return Icon(
+                                        Icons.star,
+                                        color: ColorUtils.primaryColor,
+                                        size: 20.w,
+                                      );
+                                    },
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 5.w,
+                                ),
+                                Expanded(
+                                    child: CustomText(
+                                  testimonials[index]['name'] ?? "",
+                                  fontWeight: FontWeight.bold,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.end,
+                                ))
+                              ],
+                            ),
+                            SizedBox(
+                              height: 8.w,
+                            ),
+                            CustomText(
+                              testimonials[index]['feedback'] ?? "",
+                              fontSize: 12.sp,
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ),
-            CustomText(
-              'Our App Features',
-              fontSize: 24.sp,
-              letterSpacing: 1.5,
-              fontWeight: FontWeight.bold,
-              color: ColorUtils.grey99,
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-          ],
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CustomText(
-              '1. Prayer in 5 Languages',
-              textAlign: TextAlign.center,
-              fontSize: 16.sp,
-              letterSpacing: 1.5,
-              fontWeight: FontWeight.w400,
-              color: ColorUtils.blackColor,
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            CustomText(
-              '2. The Orthodox Bible',
-              textAlign: TextAlign.center,
-              fontSize: 16.sp,
-              letterSpacing: 1.5,
-              fontWeight: FontWeight.w400,
-              color: ColorUtils.blackColor,
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            CustomText(
-              '3. Diverse Religious audios',
-              textAlign: TextAlign.center,
-              fontSize: 16.sp,
-              letterSpacing: 1.5,
-              fontWeight: FontWeight.w400,
-              color: ColorUtils.blackColor,
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            CustomText(
-              '4. Customised reminders',
-              textAlign: TextAlign.center,
-              fontSize: 16.sp,
-              letterSpacing: 1.5,
-              fontWeight: FontWeight.w400,
-              color: ColorUtils.blackColor,
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            CustomText(
-              'Much More....',
-              textAlign: TextAlign.center,
-              fontSize: 16.sp,
-              letterSpacing: 1.5,
-              fontWeight: FontWeight.bold,
-              color: ColorUtils.blackColor,
-            ),
-          ],
-        ),
-      ],
+          ),
+          // CarouselSlider(
+          //   items:
+          //   testimonials.map((testimonial) {
+          //     return Container(
+          //       padding: const EdgeInsets.all(16),
+          //       margin: const EdgeInsets.symmetric(horizontal: 8),
+          //       decoration: BoxDecoration(
+          //         color: Colors.white,
+          //         borderRadius: BorderRadius.circular(12),
+          //         boxShadow: [
+          //           BoxShadow(
+          //             color: Colors.grey.withOpacity(0.5),
+          //             spreadRadius: 2,
+          //             blurRadius: 5,
+          //             offset: const Offset(0, 3),
+          //           ),
+          //         ],
+          //       ),
+          //       child: Text(
+          //         testimonial,
+          //         style: const TextStyle(fontSize: 16),
+          //         textAlign: TextAlign.center,
+          //       ),
+          //     );
+          //   }).toList(),
+          //   options: CarouselOptions(
+          //     // aspectRatio: 16 / 6, // Adjust aspect ratio as needed
+          //     viewportFraction: 0.1, // Adjust the visible fraction of items
+          //     initialPage: 0,
+          //     enableInfiniteScroll: true,
+          //     autoPlay: false,
+          //     autoPlayInterval: const Duration(seconds: 3),
+          //     autoPlayAnimationDuration: const Duration(milliseconds: 800),
+          //     autoPlayCurve: Curves.fastOutSlowIn,
+          //     enlargeCenterPage: false,
+          //     scrollDirection: Axis.horizontal,
+          //   ),
+          // ),
+          //     // CarouselSlider(
+          //     //     items: [
+          //     //       Container(
+          //     //         // width: 250,
+          //     //         color: Colors.red,
+          //     //         child: Text("hjzghjxbcbxzh bxjkbjkvbj njkxcnjkv nvxjkcbgjkv mnjcxjkv nxjkcv"),
+          //     //       )
+          //     //     ],
+          //     //     options: CarouselOptions(
+          //     //       aspectRatio: 16/2,
+          //     //       viewportFraction:
+          //     //       0.1,
+          //     //       initialPage: 0,
+          //     //       enableInfiniteScroll: true,
+          //     //       reverse: false,
+          //     //       autoPlay: false,
+          //     //       autoPlayInterval:
+          //     //       const Duration(seconds: 3),
+          //     //       autoPlayAnimationDuration:
+          //     //       const Duration(milliseconds: 800),
+          //     //       autoPlayCurve: Curves.fastOutSlowIn,
+          //     //       enlargeCenterPage: false,
+          //     //       // enlargeFactor: 0.3,
+          //     //       onPageChanged: (index, reason) {
+          //     //         /*setState(() {
+          //     //               _currentIndex = index;
+          //     //             });*/
+          //     //       },
+          //     //       scrollDirection: Axis.horizontal,
+          //     //     )),
+        ],
+      ),
     );
   }
 
@@ -815,11 +1197,9 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
   Row prayerList() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children:
-      List.generate(
+      children: List.generate(
         createYourDailyWorkShipList.length,
-        (index) =>
-            Expanded(
+        (index) => Expanded(
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: Container(
@@ -930,78 +1310,6 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
     );
   }
 
-  Padding topBar() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-      child: Row(
-        children: [
-          Center(
-            child: LocalAssets(
-              imagePath: AssetUtils.appLogo,
-              height: 30.w,
-              width: 60.w,
-            ),
-          ),
-          const Spacer(),
-          SizedBox(
-            width: 20.w,
-          ),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                isTapOnContact = false;
-                isTapOnHome = true;
-              });
-            },
-            child: HoverUnderlineText(
-              text: StringUtils.home,
-              style: TextStyle(
-                fontSize: 10.sp,
-                letterSpacing: 1.5,
-                fontWeight: FontWeight.bold,
-                fontFamily: FontUtils.poppins,
-                color: isTapOnHome == true
-                    ? ColorUtils.primaryColor
-                    : ColorUtils.black29,
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 20.w,
-          ),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                isTapOnHome = false;
-                isTapOnContact = true;
-              });
-            },
-            child: HoverUnderlineText(
-              text: StringUtils.contact,
-              style: TextStyle(
-                fontSize: 10.sp,
-                letterSpacing: 1.5,
-                fontFamily: FontUtils.poppins,
-                fontWeight: FontWeight.bold,
-                color: isTapOnContact == true
-                    ? ColorUtils.primaryColor
-                    : ColorUtils.black29,
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 20.w,
-          ),
-          CustomHoverButton(
-            text: StringUtils.downloadNow,
-            onPressed: () {
-              print('Button Pressed!');
-            },
-          )
-        ],
-      ),
-    );
-  }
 
   Container topDescription(BoxConstraints constraints) {
     return Container(
@@ -1113,7 +1421,7 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
         ),
         CustomText(
           StringUtils.connectWithGod,
-          fontSize: 18.sp,
+          fontSize: 28.sp,
           fontWeight: FontWeight.bold,
           color: ColorUtils.black29,
         ),
@@ -1121,7 +1429,7 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
           height: 25.h,
         ),
         CustomText(StringUtils.dailyWorshipApp,
-            fontSize: 18.sp,
+            fontSize: 14.sp,
             fontWeight: FontWeight.normal,
             color: ColorUtils.black29),
         SizedBox(
@@ -1129,7 +1437,7 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
         ),
         CustomText(
           StringUtils.downloadBete,
-          fontSize: 20.sp,
+          fontSize: 16.sp,
           letterSpacing: 1.5,
           fontWeight: FontWeight.bold,
           color: ColorUtils.grey99,
@@ -1155,6 +1463,118 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
           ],
         ),
       ],
+    );
+  }
+
+  Widget webFooter(){
+    return  Padding(
+      padding:  EdgeInsets.symmetric(horizontal: 100.w),
+      child: Column(
+        children: [
+          SizedBox(height: 50.w,),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              LocalAssets(imagePath: AssetUtils.appLogo,height: 60.w,),
+              SizedBox(width: 60.w,),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                    },
+                    child: HoverUnderlineText(
+                      text: StringUtils.home.toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 10.sp,
+                        letterSpacing: 1.5,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: FontUtils.poppins,
+                        color: ColorUtils.black29,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 15.w),
+                  GestureDetector(
+                    onTap: () {
+                    },
+                    child: HoverUnderlineText(
+                      text: StringUtils.contact.toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 10.sp,
+                        letterSpacing: 1.5,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: FontUtils.poppins,
+                        color: ColorUtils.black29,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 15.w),
+                  GestureDetector(
+                    onTap: () {
+                    },
+                    child: HoverUnderlineText(
+                      text: StringUtils.privacyPolicy.toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 10.sp,
+                        letterSpacing: 1.5,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: FontUtils.poppins,
+                        color: ColorUtils.black29,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 15.w),
+                  GestureDetector(
+                    onTap: () {
+                    },
+                    child: HoverUnderlineText(
+                      text: StringUtils.termsAndCondition.toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 10.sp,
+                        letterSpacing: 1.5,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: FontUtils.poppins,
+                        color: ColorUtils.black29,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const Spacer(),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  LocalAssets(
+                    imagePath: AssetUtils.appStoreBlack,
+                    height: 50.w,
+                  ),
+                  SizedBox(
+                    width: 20.w,
+                  ),
+                  LocalAssets(
+                    imagePath: AssetUtils.playStoreBlack,
+                    height: 50.w,
+                  ),
+                ],
+              ),
+            ],
+          ),
+          SizedBox(height: 15.w,),
+          Divider(),
+          SizedBox(height: 10.w,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CustomText("Copyright © 2024 Bete Tselot. All Rights Reserved.",color: ColorUtils.grey99,fontSize: 14.sp,),
+              LocalAssets(imagePath: AssetUtils.instaIcon,height: 50.w,)
+              // Icon(Icons.instag)
+            ],
+          ),
+          SizedBox(height: 10.w,),
+        ],
+      ),
     );
   }
 }

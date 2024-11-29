@@ -53,12 +53,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CustomHoverButton extends StatefulWidget {
   final String text;
   final VoidCallback onPressed;
+  final EdgeInsetsGeometry? padding;
+  final Color? color;
+  final Color? hoverColor;
 
   const CustomHoverButton({
     required this.text,
     required this.onPressed,
-    Key? key,
-  }) : super(key: key);
+    super.key,this.padding, this.color, this.hoverColor,
+  });
 
   @override
   _CustomHoverButtonState createState() => _CustomHoverButtonState();
@@ -77,9 +80,9 @@ class _CustomHoverButtonState extends State<CustomHoverButton> {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeInOut,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          padding: widget.padding?? EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.w),
           decoration: BoxDecoration(
-            color: isHovered ? Colors.orange.shade400 : ColorUtils.primaryColor,
+            color: isHovered ? widget.hoverColor ?? Colors.orange.shade400 : widget.color ?? ColorUtils.primaryColor,
             borderRadius: BorderRadius.circular(12), // Adjust for rounded corners
             boxShadow: [
               BoxShadow(
@@ -89,13 +92,12 @@ class _CustomHoverButtonState extends State<CustomHoverButton> {
               ),
             ],
           ),
-          child: CustomText(
+          child : CustomText(
             widget.text,
-
-              fontSize: 14.sp,
+            fontSize: 13.sp,
               fontWeight: FontWeight.bold,
               color: Colors.white,
-letterSpacing: 1.5,
+             letterSpacing: 1.5,
             textAlign: TextAlign.center,
           ),
         ),

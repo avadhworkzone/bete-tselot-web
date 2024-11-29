@@ -10,4 +10,8 @@ class StringUtils{
   static const  growYourFaith = "Grow your faith with daily devotionals and\nChristian meditations";
   static const  prayer = "PRAYER";
   static const  connectWithGodAndYourCommunity = "Connect with God and your community through prayer";
+  static const  signUp = "SIGN UP";
+  static const  submit = "SUBMIT";
+  static const  privacyPolicy = "Privacy Policy";
+  static const  termsAndCondition = "Terms & Conditions";
 }

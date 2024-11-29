@@ -18,5 +18,6 @@ class ColorUtils {
   static const blueC6 = Colors.white;
   static const blueF9 = Color(0xffC4DBF9);
   static const grey94 = Color(0xff949494);
+  static const blued4 = Color(0xff499ed4);
   static const unSelectedPrayerTab = Color(0xffF5F5F5);
 }

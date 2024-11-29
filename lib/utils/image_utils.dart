@@ -23,6 +23,10 @@ class AssetUtils {
   static String reminderSS = '${imagePath}reminder_ss.png';
   static String leftBranch = '${imagePath}left_branch.png';
   static String rightBranch = '${imagePath}right_branch.png';
+  static String appStoreBlack = '${imagePath}appstore_black.png';
+  static String playStoreBlack = '${imagePath}playstore_black.png';
+  static String instaIcon = '${imagePath}insta_icon.png';
+  static String contactUs = '${imagePath}contact_us.png';
 }
 
 class IconUtils {
