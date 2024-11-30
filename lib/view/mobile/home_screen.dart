@@ -7,7 +7,6 @@ import 'package:bete_tselot_web/utils/string_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 import '../../CommonWidgets/hover_button.dart';
 
@@ -91,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                children: [
                  Stack(
                    children: [
-                     LocalAssets(imagePath: AssetUtils.cloudImage,height: 900.h,width: Get.width,boxFit: BoxFit.fill,),
+                     LocalAssets(imagePath: AssetUtils.cloudImage,height: 900.h,width: double.infinity,boxFit: BoxFit.fill,),
                      Positioned(
                        top: 0,
                        bottom: 0,

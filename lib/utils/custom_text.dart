@@ -1,7 +1,6 @@
 import 'package:bete_tselot_web/utils/image_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 class CustomText extends StatelessWidget {
   final String title;
@@ -42,7 +41,7 @@ class CustomText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      title.tr,
+      title,
       textAlign: textAlign,
       maxLines: maxLines,
       style: TextStyle(
@@ -69,7 +68,7 @@ CustomText underLineText(
     FontWeight? fontWeight,
     Color? fontColor}) {
   return CustomText(
-    title.tr,
+    title,
     color: Colors.transparent,
     fontSize: fontSize ?? 14.6.sp,
     shadows: [

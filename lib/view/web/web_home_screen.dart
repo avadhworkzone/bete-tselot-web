@@ -7,13 +7,13 @@ import 'package:bete_tselot_web/utils/color_utils.dart';
 import 'package:bete_tselot_web/utils/custom_text.dart';
 import 'package:bete_tselot_web/utils/image_utils.dart';
 import 'package:bete_tselot_web/utils/string_utils.dart';
+import 'package:bete_tselot_web/view/web/web_footer.dart';
 import 'package:bete_tselot_web/view/web/web_top_bar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
 
 class WebHomeScreen extends StatefulWidget {
   const WebHomeScreen({super.key});
@@ -27,28 +27,6 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
   TextEditingController firstnameController = TextEditingController();
   TextEditingController lastnameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  List<Map<String, dynamic>> createYourDailyWorkShipList = [
-    {
-      "title": 'DAILY PASSAGE',
-      "value": "Learn God's Word with today's Bible verse",
-      "icon": "assets/images/bookIcon.jpg"
-    },
-    {
-      "title": 'DAILY DEVOTIONAL',
-      "value": "Grow closer to God with curated devotionals",
-      "icon": "assets/images/chatIcon.jpg"
-    },
-    {
-      "title": 'DAILY REFLECTION',
-      "value": "Find peace with guided Christian meditations",
-      "icon": "assets/images/headphoneIcon.jpg"
-    },
-    {
-      "title": 'PRAYER',
-      "value": "Connect with God and your community through prayer",
-      "icon": "assets/images/handIcon.jpg"
-    },
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +37,7 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
           return Column(
             children: [
               ///top bar
-              WebTopBar(isFromContact: false, isFromHome: true,),
+              // WebTopBar(isFromContact: false, isFromHome: true,),
 
               ///bottom View
               Expanded(
@@ -171,7 +149,8 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
                        ///Sign Up
                       constraints.maxWidth < 600 ? appSignUpView() : webSignUpView(),
                       ///Footer
-                      constraints.maxWidth < 600 ? webFooter() : webFooter(),
+                      constraints.maxWidth < 600 ? const WebFooter() : const WebFooter(),
+
                     ],
                   ),
                 ),
@@ -1194,122 +1173,6 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
     );
   }
 
-  Row prayerList() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(
-        createYourDailyWorkShipList.length,
-        (index) => Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                        color: ColorUtils.grey2a.withOpacity(0.2),
-                        offset: Offset(0, 10),
-                        blurRadius: 10)
-                  ]),
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CustomText(
-                      createYourDailyWorkShipList[index]['title'],
-                      fontSize: 18.sp,
-                      letterSpacing: 1.5,
-                      fontWeight: FontWeight.bold,
-                      color: ColorUtils.grey99,
-                    ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Image.asset(
-                      createYourDailyWorkShipList[index]['icon'],
-                      height: 75.w,
-                    ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    CustomText(
-                      createYourDailyWorkShipList[index]['value'],
-                      textAlign: TextAlign.center,
-                      fontSize: 16.sp,
-                      letterSpacing: 1.5,
-                      fontWeight: FontWeight.w400,
-                      color: ColorUtils.black29,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Column prayerListColumn() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(
-        createYourDailyWorkShipList.length,
-        (index) => Padding(
-          padding: const EdgeInsets.all(20),
-          child: Container(
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                      color: ColorUtils.grey2a.withOpacity(0.2),
-                      offset: Offset(0, 10),
-                      blurRadius: 10)
-                ]),
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CustomText(
-                    createYourDailyWorkShipList[index]['title'],
-                    fontSize: 18.sp,
-                    letterSpacing: 1.5,
-                    fontWeight: FontWeight.bold,
-                    color: ColorUtils.grey99,
-                  ),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  Image.asset(
-                    createYourDailyWorkShipList[index]['icon'],
-                    height: 75.w,
-                  ),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  CustomText(
-                    createYourDailyWorkShipList[index]['value'],
-                    textAlign: TextAlign.center,
-                    fontSize: 16.sp,
-                    letterSpacing: 1.5,
-                    fontWeight: FontWeight.w400,
-                    color: ColorUtils.black29,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
 
   Container topDescription(BoxConstraints constraints) {
     return Container(
@@ -1466,115 +1329,5 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
     );
   }
 
-  Widget webFooter(){
-    return  Padding(
-      padding:  EdgeInsets.symmetric(horizontal: 100.w),
-      child: Column(
-        children: [
-          SizedBox(height: 50.w,),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              LocalAssets(imagePath: AssetUtils.appLogo,height: 60.w,),
-              SizedBox(width: 60.w,),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                    },
-                    child: HoverUnderlineText(
-                      text: StringUtils.home.toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 10.sp,
-                        letterSpacing: 1.5,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: FontUtils.poppins,
-                        color: ColorUtils.black29,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 15.w),
-                  GestureDetector(
-                    onTap: () {
-                    },
-                    child: HoverUnderlineText(
-                      text: StringUtils.contact.toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 10.sp,
-                        letterSpacing: 1.5,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: FontUtils.poppins,
-                        color: ColorUtils.black29,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 15.w),
-                  GestureDetector(
-                    onTap: () {
-                    },
-                    child: HoverUnderlineText(
-                      text: StringUtils.privacyPolicy.toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 10.sp,
-                        letterSpacing: 1.5,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: FontUtils.poppins,
-                        color: ColorUtils.black29,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 15.w),
-                  GestureDetector(
-                    onTap: () {
-                    },
-                    child: HoverUnderlineText(
-                      text: StringUtils.termsAndCondition.toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 10.sp,
-                        letterSpacing: 1.5,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: FontUtils.poppins,
-                        color: ColorUtils.black29,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const Spacer(),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  LocalAssets(
-                    imagePath: AssetUtils.appStoreBlack,
-                    height: 50.w,
-                  ),
-                  SizedBox(
-                    width: 20.w,
-                  ),
-                  LocalAssets(
-                    imagePath: AssetUtils.playStoreBlack,
-                    height: 50.w,
-                  ),
-                ],
-              ),
-            ],
-          ),
-          SizedBox(height: 15.w,),
-          Divider(),
-          SizedBox(height: 10.w,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CustomText("Copyright © 2024 Bete Tselot. All Rights Reserved.",color: ColorUtils.grey99,fontSize: 14.sp,),
-              LocalAssets(imagePath: AssetUtils.instaIcon,height: 50.w,)
-              // Icon(Icons.instag)
-            ],
-          ),
-          SizedBox(height: 10.w,),
-        ],
-      ),
-    );
-  }
+
 }

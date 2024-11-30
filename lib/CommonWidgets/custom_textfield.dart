@@ -3,7 +3,6 @@ import 'package:bete_tselot_web/utils/color_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 import '../utils/image_utils.dart';
 
@@ -127,7 +126,7 @@ class CommonTextField extends StatelessWidget {
           suffixIcon: sIcon,
           prefixIcon: pIcon,
           hoverColor: ColorUtils.whiteColor,
-          hintText: showLabel! ? '' : hintText.toString().tr,
+          hintText: showLabel! ? '' : hintText.toString(),
           hintStyle: TextStyle(
               color: ColorUtils.black77.withOpacity(0.5),
               fontSize: 12.sp,
