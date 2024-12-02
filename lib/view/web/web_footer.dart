@@ -8,6 +8,7 @@ import 'package:bete_tselot_web/utils/string_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class WebFooter extends StatelessWidget {
   const WebFooter({super.key});
@@ -22,7 +23,12 @@ class WebFooter extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              LocalAssets(imagePath: AssetUtils.appLogo,height: 60.w,),
+              InkWell(onTap: () async {
+                final Uri url = Uri.parse('https://bete-tselot.com/');
+                if (!await launchUrl(url)) {
+                throw Exception('Could not launch $url');
+                }
+              },child: LocalAssets(imagePath: AssetUtils.appLogo,height: 60.w,)),
               SizedBox(width: 60.w,),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,6 +83,7 @@ class WebFooter extends StatelessWidget {
                   SizedBox(height: 15.w),
                   GestureDetector(
                     onTap: () {
+                      context.go(RouterClass.getTermsConditionRoute());
                     },
                     child: HoverUnderlineText(
                       text: StringUtils.termsAndCondition.toUpperCase(),
@@ -96,16 +103,32 @@ class WebFooter extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  LocalAssets(
-                    imagePath: AssetUtils.appStoreBlack,
-                    height: 50.w,
+                  InkWell(
+                    onTap: () async {
+                      final Uri url = Uri.parse('https://apps.apple.com/in/app/bete-tselot/id451350221');
+                      if (!await launchUrl(url)) {
+                      throw Exception('Could not launch $url');
+                      }
+                    },
+                    child: LocalAssets(
+                      imagePath: AssetUtils.appStoreBlack,
+                      height: 50.w,
+                    ),
                   ),
                   SizedBox(
                     width: 20.w,
                   ),
-                  LocalAssets(
-                    imagePath: AssetUtils.playStoreBlack,
-                    height: 50.w,
+                  InkWell(
+                    onTap: () async {
+                      final Uri url = Uri.parse('https://play.google.com/store/apps/details?id=com.kiduel.bete_tselot&hl=en&pli=1');
+                      if (!await launchUrl(url)) {
+                      throw Exception('Could not launch $url');
+                      }
+                    },
+                    child: LocalAssets(
+                      imagePath: AssetUtils.playStoreBlack,
+                      height: 50.w,
+                    ),
                   ),
                 ],
               ),
@@ -118,7 +141,12 @@ class WebFooter extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CustomText("Copyright © 2024 Bete Tselot. All Rights Reserved.",color: ColorUtils.grey99,fontSize: 14.sp,),
-              LocalAssets(imagePath: AssetUtils.instaIcon,height: 50.w,)
+              InkWell(onTap: () async {
+                final Uri url = Uri.parse('https://bete-tselot.com/');
+                if (!await launchUrl(url)) {
+                throw Exception('Could not launch $url');
+                }
+              },child: LocalAssets(imagePath: AssetUtils.instaIcon,height: 50.w,))
               // Icon(Icons.instag)
             ],
           ),

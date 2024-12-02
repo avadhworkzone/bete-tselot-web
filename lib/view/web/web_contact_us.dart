@@ -11,6 +11,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class WebContactUsScreen extends StatefulWidget {
   const WebContactUsScreen({super.key});
@@ -95,7 +96,16 @@ class _WebContactUsScreenState extends State<WebContactUsScreen> {
                           Icon(Icons.email_outlined,color: ColorUtils.grey99.withOpacity(0.6),),
                           SizedBox(width: 5.w,),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () async {
+                              final Uri url = Uri(
+                                scheme: 'mailto',
+                                path: 'hello@bete-tselot.com',
+                              );
+
+                              if (!await launchUrl(url)) {
+                              throw Exception('Could not launch $url');
+                              }
+                            },
                             child: HoverUnderlineText(
                               text: "hello@bete-tselot.com",
                               style: TextStyle(
@@ -306,5 +316,7 @@ class _WebContactUsScreenState extends State<WebContactUsScreen> {
       print('Error adding data: $e');
     }
   }
+
+
 
 }

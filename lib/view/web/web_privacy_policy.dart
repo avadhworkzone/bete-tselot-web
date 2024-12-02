@@ -11,6 +11,7 @@ import 'package:bete_tselot_web/view/web/web_footer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -32,7 +33,6 @@ class _WebPrivacyPolicyScreenState extends State<WebPrivacyPolicyScreen> {
           return SingleChildScrollView(
             child: Column(
               children: [
-                ///Sign Up
                 Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -44,14 +44,45 @@ class _WebPrivacyPolicyScreenState extends State<WebPrivacyPolicyScreen> {
                         : webTopView()),
 
                 Padding(
-                  padding:  EdgeInsets.symmetric(horizontal: 100.w),
+                  padding: EdgeInsets.symmetric(horizontal: 100.w),
                   child: Column(
                     children: [
-                      commonPrivacyTab(context),
+                      SizedBox(height: 15.w,),
+                      const Divider(thickness: 0.5,),
+                      commonPrivacyTab(context: context,title: "In Summary",description: PrivacyPolicy.inSummary),
+                      const Divider(thickness: 0.5,),
+                      commonPrivacyTab(context: context,title: "what this privacy policy covers",description: PrivacyPolicy.privacyPolicyCovers),
+                      const Divider(thickness: 0.5,),
+                      commonPrivacyTab(context: context,title: "categories of personal data we collect",description: PrivacyPolicy.personalDataWeCollect),
+                      const Divider(thickness: 0.5,),
+                      commonPrivacyTab(context: context,title: "our commercial or business purposes for collecting personal data",description: PrivacyPolicy.businessPurposeForCollectingPersonalData),
+                      const Divider(thickness: 0.5,),
+                      commonPrivacyTab(context: context,title: "categories of sources of personal data",description: PrivacyPolicy.categoriesOfSourcesOfPersonalData),
+                      const Divider(thickness: 0.5,),
+                      commonPrivacyTab(context: context,title: "data sharing",description: PrivacyPolicy.dataSharing),
+                      const Divider(thickness: 0.5,),
+                      commonPrivacyTab(context: context,title: "data security and retention",description: PrivacyPolicy.dataSecurityAndRetention),
+                      const Divider(thickness: 0.5,),
+                      commonPrivacyTab(context: context,title: "personal data of children",description: PrivacyPolicy.personalDataOfChildren),
+                      const Divider(thickness: 0.5,),
+                      commonPrivacyTab(context: context,title: "european union data subject rights",description: PrivacyPolicy.europeanUnionDataSubjectRights),
+                      const Divider(thickness: 0.5,),
+                      commonPrivacyTab(context: context,title: "brazil residents rights",description: PrivacyPolicy.brazilResidentsRights),
+                      const Divider(thickness: 0.5,),
+                      commonPrivacyTab(context: context,title: "california residents rights",description: PrivacyPolicy.californiaResidentsRights),
+                      const Divider(thickness: 0.5,),
+                      commonPrivacyTab(context: context,title: "other state law privacy rights",description: PrivacyPolicy.otherStateLawPrivacyRights),
+                      const Divider(thickness: 0.5,),
+                      commonPrivacyTab(context: context,title: "change to this privacy policy",description: PrivacyPolicy.changeToThisPrivacyPolicy),
+                      const Divider(thickness: 0.5,),
+                      commonPrivacyTab(context: context,title: "contact information",description: PrivacyPolicy.contactInformation),
+                      const Divider(thickness: 0.5,),
+                      commonPrivacyTab(context: context,title: "opting out",description: PrivacyPolicy.optingOut),
+                      const Divider(thickness: 0.5,),
+                      commonPrivacyTab(context: context,title: "terms of service",description:PrivacyPolicy.termsOfService),
                     ],
                   ),
                 ),
-
 
                 ///Footer
                 constraints.maxWidth < 600
@@ -65,60 +96,33 @@ class _WebPrivacyPolicyScreenState extends State<WebPrivacyPolicyScreen> {
     );
   }
 
-  Theme commonPrivacyTab(BuildContext context) {
+  Theme commonPrivacyTab({required BuildContext context,required String title, required String description}) {
     return Theme(
-                      data: Theme.of(context).copyWith(
-                        hoverColor: Colors.transparent,
-                        splashColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        dividerColor: Colors.transparent,
-                      ),
-                      child:  ExpansionTile(
-                        title: CustomText('IN SUMMARY',fontWeight: FontWeight.bold,),
-                        childrenPadding: EdgeInsets.symmetric(horizontal: 20.w),
-                          expandedCrossAxisAlignment : CrossAxisAlignment.start,
-                        children: <Widget>[
-                          HtmlWidget(
-                              PrivacyPolicy.personalDataWeCollect
-                              ,
-                              textStyle: TextStyle(
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: FontUtils.poppins),
-                              onLoadingBuilder: (context, element, loadingProgress) {
-                                return const Center(
-                                    child:CircularProgressIndicator());
-                              }),
-                //           CustomText("Our key principles are simple:",fontSize: 12.sp),
-                //           SizedBox(height: 10,),
-                //           Row(
-                //             crossAxisAlignment: CrossAxisAlignment.start,
-                //             children: [
-                //
-                //               CustomText("• ",),
-                //               Expanded(child: CustomText("We do not sell, rent, or otherwise provide users' Personal Data to any data brokers",fontSize: 12.sp,)),
-                //             ],
-                //           ),
-                //           Text('''
-                // Our key principles are simple:
-                //
-                // - We do not sell, rent, or otherwise provide users' Personal Data to any data brokers.
-                // - Any App Analytics Data that we do collect – in the spirit of improving or personalizing the product, messaging, and content – is studied only at an aggregate level across the Bete Tselot community (e.g.what content is most popular), unless necessary for fixing specific user issues with the app.
-                // - We take care to encrypt all connections ensuring the latest security standards.
-                // - We partner with Service Providers (e.g., payment processors, database providers) to support our App and Analytics Partners to study how best to improve our App (e.g., what content is most popular). Personal Data shared with these providers is encrypted and protected.
-                // - We do not knowingly collect or solicit the data of anyone under the age of 13 without obtaining COPPA-compliant consent from a parent or guardian, and we do not knowingly share information about individuals under the age of 13 with Advertising Partners.
-                //
-                // You may, subject to the terms of this Privacy Policy, delete your full account and all data associated with it at any point.
-                //
-                // NOTE: We published this Privacy Policy on April 29, 2022 and it will take effect on May 13, 2022.
-                //
-                // TUPOE Ltd and its affiliates, subsidiaries, and related entities ("Bete Tselot", "we, "our") is committed to protecting the privacy and security of the personal data we process about employees and users of our services ("you/your").
-                //
-                // Bete Tselot refers to the software program provided by TUPOE Ltd and downloaded on any electronic device.
-                //               '''),
-                        ],
-                      ),
-                    );
+      data: Theme.of(context).copyWith(
+        hoverColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        dividerColor: Colors.transparent,
+      ),
+      child: ExpansionTile(
+        title: CustomText(
+          title.toUpperCase(),
+          fontWeight: FontWeight.bold,
+        ),
+        childrenPadding: EdgeInsets.symmetric(horizontal: 20.w),
+        expandedCrossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          HtmlWidget(description,
+              textStyle: TextStyle(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: FontUtils.poppins),
+              onLoadingBuilder: (context, element, loadingProgress) {
+            return const Center(child: CircularProgressIndicator());
+          }),
+        ],
+      ),
+    );
   }
 
   Padding webTopView() {

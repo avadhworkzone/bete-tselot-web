@@ -9,6 +9,7 @@ import 'package:bete_tselot_web/view/web/web_footer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class WebTopBar extends StatefulWidget {
   final bool isFromHome;
@@ -37,10 +38,18 @@ class _WebTopBarState extends State<WebTopBar> {
                 child: Row(
                   children: [
                     Center(
-                      child: LocalAssets(
-                        imagePath: AssetUtils.appLogo,
-                        height: 30.w,
-                        width: 60.w,
+                      child: InkWell(
+                        onTap: () async {
+                          final Uri url = Uri.parse('https://bete-tselot.com/');
+                          if (!await launchUrl(url)) {
+                          throw Exception('Could not launch $url');
+                          }
+                        },
+                        child: LocalAssets(
+                          imagePath: AssetUtils.appLogo,
+                          height: 30.w,
+                          width: 60.w,
+                        ),
                       ),
                     ),
                     const Spacer(),
@@ -89,8 +98,11 @@ class _WebTopBarState extends State<WebTopBar> {
                     ),
                     CustomHoverButton(
                       text: StringUtils.downloadNow,
-                      onPressed: () {
-                        print('Button Pressed!');
+                      onPressed: () async {
+                        final Uri url = Uri.parse('https://play.google.com/store/apps/details?id=com.kiduel.bete_tselot&hl=en&pli=1');
+                        if (!await launchUrl(url)) {
+                        throw Exception('Could not launch $url');
+                        }
                       },
                     )
                   ],

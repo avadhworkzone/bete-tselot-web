@@ -9,11 +9,11 @@ import 'package:bete_tselot_web/utils/image_utils.dart';
 import 'package:bete_tselot_web/utils/string_utils.dart';
 import 'package:bete_tselot_web/view/web/web_footer.dart';
 import 'package:bete_tselot_web/view/web/web_top_bar.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class WebHomeScreen extends StatefulWidget {
   const WebHomeScreen({super.key});
@@ -1312,16 +1312,32 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            LocalAssets(
-              imagePath: AssetUtils.appStore,
-              height: 50.w,
+            InkWell(
+              onTap: () async {
+                final Uri url = Uri.parse('https://apps.apple.com/in/app/bete-tselot/id451350221');
+                if (!await launchUrl(url)) {
+                throw Exception('Could not launch $url');
+                }
+              },
+              child: LocalAssets(
+                imagePath: AssetUtils.appStore,
+                height: 50.w,
+              ),
             ),
             SizedBox(
               width: 20.w,
             ),
-            LocalAssets(
-              imagePath: AssetUtils.playStore,
-              height: 50.w,
+            InkWell(
+              onTap: () async {
+                final Uri url = Uri.parse('https://play.google.com/store/apps/details?id=com.kiduel.bete_tselot&hl=en&pli=1');
+                if (!await launchUrl(url)) {
+                throw Exception('Could not launch $url');
+                }
+              },
+              child: LocalAssets(
+                imagePath: AssetUtils.playStore,
+                height: 50.w,
+              ),
             ),
           ],
         ),

@@ -38,12 +38,12 @@ dependencies:
 #  get: ^4.6.6
   flutter_screenutil: ^5.9.3
   flutter_svg: ^2.0.15
-  carousel_slider: ^5.0.0
   firebase_core: ^2.27.1
   cloud_firestore: ^4.15.9
   fluttertoast: ^8.2.8
   go_router: ^14.6.1
   flutter_widget_from_html: ^0.14.11
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   flutter_test:
