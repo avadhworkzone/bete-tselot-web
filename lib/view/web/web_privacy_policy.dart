@@ -7,6 +7,7 @@ import 'package:bete_tselot_web/utils/custom_text.dart';
 import 'package:bete_tselot_web/utils/image_utils.dart';
 import 'package:bete_tselot_web/utils/static_data.dart';
 import 'package:bete_tselot_web/utils/string_utils.dart';
+import 'package:bete_tselot_web/view/mobile/app_footer.dart';
 import 'package:bete_tselot_web/view/web/web_footer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -87,7 +88,7 @@ class _WebPrivacyPolicyScreenState extends State<WebPrivacyPolicyScreen> {
                 ///Footer
                 constraints.maxWidth < 600
                     ? const WebFooter()
-                    : const WebFooter(),
+                    : const AppFooter(),
               ],
             ),
           );

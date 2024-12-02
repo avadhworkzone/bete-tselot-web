@@ -1,3 +1,56 @@
+class TestimonialsList {
+  static List<Map<String, String>> testimonials = [
+    {
+      'name': 'Yared M.',
+      'stars': '★★★★★',
+      'feedback':
+      'I am super pleased with this app. I wish there is 10 stars to give. Ethiopian Orthodox Church is lucky to have you guys, I am just speechless for the effort you guys put in. Well done! I am so immersed with the liturgy I felt like I am inside the church. Kibre yegebachehual tsegawn yebzalachu. If people want to give back some please add a support link. I am in for that and will be glad to be the first one.',
+    },
+    {
+      'name': 'Jape Y.',
+      'stars': '★★★★★',
+      'feedback':
+      'I really love this app I dont have words big respect and love for the creater its a nice way to get closer with God and know our religion well',
+    },
+    {
+      'name': 'Bereket A.',
+      'stars': '★★★★★',
+      'feedback':
+      'I\'ve gotten the blessing of the Almighty God through your hard work of this precious app. May God the Almighty bless you & give you more wisdom of Solomon.',
+    },
+    {
+      'name': 'Ab N.',
+      'stars': '★★★★★',
+      'feedback':
+      'This is a great app. I love that it encompasses the daily prayers along with the daily psalms. I would love to see a double tap to add quotes to a favorites tab feature to keep verses we have connected with on that day. God bless you!',
+    },
+    {
+      'name': 'Zekarias G.',
+      'stars': '★★★★★',
+      'feedback':
+      'Thank you for developing the "Bete Tselot" app. It is incredibly helpful and valuable for spiritual growth. The app is easy to use, unlike similar ones, and the language options help many learn prayers in different languages. The simple forms of prayers will aid Christians, especially Orthodox Tewahdo, in their spiritual journey. Please consider breaking down the Holy Bible in the simplest form for daily study to help Christians fall in love with the word of God. Thank you & stay blessed',
+    },
+    {
+      'name': 'Semi K.',
+      'stars': '★★★★★',
+      'feedback':
+      'I am glad that I\'m able to use this app wherever I travel away from home and Orthodox churches. It\'s all in One, Kidase and prayer book. Thank you!',
+    },
+    {
+      'name': 'Eden B.',
+      'stars': '★★★★★',
+      'feedback':
+      'Thank you so much. God bless you. It is an amazing app. I know even foreigners who are exercising to follow the Ethiopian Orthodox Tewahedo religion are using this app and found it really helpful.',
+    },
+    {
+      'name': 'Paula U.',
+      'stars': '★★★★★',
+      'feedback':
+      'I love this app. It\'s so simple and broken down so nicely, I can really focus on the Word. I love the reflection part of the devotional as it helps me to really sync with God. This app has changed my daily routine for the better!',
+    },
+  ];
+}
+
 class PrivacyPolicy {
   static String inSummary = '''<!DOCTYPE html>
 <html lang="en">

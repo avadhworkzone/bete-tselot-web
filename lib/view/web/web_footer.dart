@@ -135,7 +135,7 @@ class WebFooter extends StatelessWidget {
             ],
           ),
           SizedBox(height: 15.w,),
-          Divider(),
+          const Divider(),
           SizedBox(height: 10.w,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

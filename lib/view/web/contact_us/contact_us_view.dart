@@ -6,55 +6,27 @@ import 'package:bete_tselot_web/utils/color_utils.dart';
 import 'package:bete_tselot_web/utils/custom_text.dart';
 import 'package:bete_tselot_web/utils/image_utils.dart';
 import 'package:bete_tselot_web/utils/string_utils.dart';
-import 'package:bete_tselot_web/view/web/web_footer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class WebContactUsScreen extends StatefulWidget {
-  const WebContactUsScreen({super.key});
+class WebContactUsView extends StatefulWidget {
+
+  const WebContactUsView({super.key});
 
   @override
-  State<WebContactUsScreen> createState() => _WebContactUsScreenState();
+  State<WebContactUsView> createState() => _WebContactUsViewState();
 }
 
-class _WebContactUsScreenState extends State<WebContactUsScreen> {
+class _WebContactUsViewState extends State<WebContactUsView> {
   TextEditingController firstnameController = TextEditingController();
   TextEditingController messageController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorUtils.whiteColor,
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                ///Sign Up
-                Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: const Color(0xfff5f5f5),
-                    ),
-                    child: constraints.maxWidth < 600
-                        ? appContactUsView()
-                        : webContactUsView()),
 
-                ///Footer
-                constraints.maxWidth < 600 ? const WebFooter() : const WebFooter(),
-              ],
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  Padding webContactUsView() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 80.w, vertical: 50.w),
       child: Padding(
@@ -103,7 +75,7 @@ class _WebContactUsScreenState extends State<WebContactUsScreen> {
                               );
 
                               if (!await launchUrl(url)) {
-                              throw Exception('Could not launch $url');
+                                throw Exception('Could not launch $url');
                               }
                             },
                             child: HoverUnderlineText(
@@ -162,7 +134,7 @@ class _WebContactUsScreenState extends State<WebContactUsScreen> {
                                 backgroundColor: Colors.red,
                                 textColor: Colors.white,
                                 webBgColor:
-                                    "linear-gradient(to right, #BB352E, #BB352E)",
+                                "linear-gradient(to right, #BB352E, #BB352E)",
                                 fontSize: 16.0);
                           } else {
                             final firstName = firstnameController.text;
@@ -180,101 +152,6 @@ class _WebContactUsScreenState extends State<WebContactUsScreen> {
           ],
         ),
       ),
-    );
-  }
-
-  Padding appContactUsView() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 60.w, vertical: 50.w),
-      child: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: const Color(0xfff5f5f5),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
-                    offset: const Offset(0, 10),
-                    blurRadius: 10)
-              ]),
-          child: Padding(
-            padding: EdgeInsets.all(50.w),
-            child: Column(
-              children: [
-                CustomText(
-                  "Sign up to receive latest product\nnews, exclusive content & more!",
-                  fontSize: 24.sp,
-                  fontWeight: FontWeight.bold,
-                  color: ColorUtils.black29,
-                ),
-                SizedBox(
-                  height: 20.w,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                          child: CommonTextField(
-                        textEditController: firstnameController,
-                        hintText: "First Name",
-                      )),
-                      SizedBox(
-                        width: 20.w,
-                      ),
-                      Expanded(
-                          child: CommonTextField(
-                        textEditController: messageController,
-                        hintText: "Last Name",
-                      )),
-                      SizedBox(
-                        width: 20.w,
-                      ),
-                      Expanded(
-                          child: CommonTextField(
-                        textEditController: emailController,
-                        hintText: "E-mail address",
-                      )),
-
-                      // Signup Button
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 30.w,
-                ),
-                CustomHoverButton(
-                  text: StringUtils.signUp,
-                  color: Colors.blue.shade700.withOpacity(0.7),
-                  hoverColor: Colors.blue.shade700.withOpacity(0.9),
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 70.w, vertical: 10.w),
-                  onPressed: () {
-                    if (firstnameController.text.isEmpty ||
-                        messageController.text.isEmpty ||
-                        emailController.text.isEmpty) {
-                      Fluttertoast.showToast(
-                          msg: "All Fields are required",
-                          toastLength: Toast.LENGTH_LONG,
-                          gravity: ToastGravity.CENTER,
-                          timeInSecForIosWeb: 2,
-                          // webBgColor: Colors.red,
-                          backgroundColor: Colors.red,
-                          textColor: Colors.white,
-                          webBgColor:
-                              "linear-gradient(to right, #BB352E, #BB352E)",
-                          fontSize: 16.0);
-                    } else {
-                      final firstName = firstnameController.text;
-                      final lastName = messageController.text;
-                      final email = emailController.text;
-                      addDataToFirestore(firstName, lastName, email);
-                    }
-                  },
-                )
-              ],
-            ),
-          )),
     );
   }
 
@@ -316,7 +193,4 @@ class _WebContactUsScreenState extends State<WebContactUsScreen> {
       print('Error adding data: $e');
     }
   }
-
-
-
 }

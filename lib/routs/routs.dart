@@ -19,8 +19,8 @@
 // }
 
 import 'package:bete_tselot_web/view/mobile/home_screen.dart';
-import 'package:bete_tselot_web/view/web/web_contact_us.dart';
-import 'package:bete_tselot_web/view/web/web_home_screen.dart';
+import 'package:bete_tselot_web/view/web/contact_us/web_contact_us.dart';
+import 'package:bete_tselot_web/view/web/home/web_home_screen.dart';
 import 'package:bete_tselot_web/view/web/web_privacy_policy.dart';
 import 'package:bete_tselot_web/view/web/web_terms_condition.dart';
 import 'package:bete_tselot_web/view/web/web_top_bar.dart';
