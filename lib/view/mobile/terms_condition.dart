@@ -1,7 +1,7 @@
 import 'package:bete_tselot_web/utils/color_utils.dart';
 import 'package:bete_tselot_web/utils/image_utils.dart';
 import 'package:bete_tselot_web/utils/static_data.dart';
-import 'package:bete_tselot_web/view/web/web_footer.dart';
+import 'package:bete_tselot_web/view/mobile/app_footer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -9,14 +9,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 
-class WebTermsConditionScreen extends StatefulWidget {
-  const WebTermsConditionScreen({super.key});
+class AppTermsConditionScreen extends StatefulWidget {
+  const AppTermsConditionScreen({super.key});
 
   @override
-  State<WebTermsConditionScreen> createState() => _WebTermsConditionScreenState();
+  State<AppTermsConditionScreen> createState() => _AppTermsConditionScreenState();
 }
 
-class _WebTermsConditionScreenState extends State<WebTermsConditionScreen> {
+class _AppTermsConditionScreenState extends State<AppTermsConditionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,11 +30,11 @@ class _WebTermsConditionScreenState extends State<WebTermsConditionScreen> {
                   borderRadius: BorderRadius.circular(10),
                   color: const Color(0xfff5f5f5),
                 ),
-                child:  webTopView()),
+                child: topView()),
 
 
             ///Footer
-            const WebFooter()
+            const AppFooter(),
           ],
         ),
       ),
@@ -42,9 +42,9 @@ class _WebTermsConditionScreenState extends State<WebTermsConditionScreen> {
   }
 
 
-  Padding webTopView() {
+  Padding topView() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 80.w, vertical: 50.w),
+      padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 50.w),
       child:  HtmlWidget(TermsAndCondition.termsAndCondition,
           textStyle: TextStyle(
               fontSize: 12.sp,
@@ -55,6 +55,5 @@ class _WebTermsConditionScreenState extends State<WebTermsConditionScreen> {
           }),
     );
   }
-
 
 }

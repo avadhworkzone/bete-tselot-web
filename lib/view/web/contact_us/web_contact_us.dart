@@ -1,6 +1,4 @@
 import 'package:bete_tselot_web/utils/color_utils.dart';
-import 'package:bete_tselot_web/view/mobile/app_footer.dart';
-import 'package:bete_tselot_web/view/mobile/contact_us/contact_us_view.dart';
 import 'package:bete_tselot_web/view/web/contact_us/contact_us_view.dart';
 import 'package:bete_tselot_web/view/web/web_footer.dart';
 import 'package:flutter/material.dart';
@@ -31,12 +29,10 @@ class _WebContactUsScreenState extends State<WebContactUsScreen> {
                       borderRadius: BorderRadius.circular(10),
                       color: const Color(0xfff5f5f5),
                     ),
-                    child: constraints.maxWidth < 600
-                        ? const AppContactUsView()
-                        : const WebContactUsView()),
+                    child:  const WebContactUsView()),
 
                 ///Footer
-                constraints.maxWidth < 600 ? const WebFooter() : const AppFooter(),
+                const WebFooter(),
               ],
             ),
           );

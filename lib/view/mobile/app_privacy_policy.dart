@@ -3,21 +3,21 @@ import 'package:bete_tselot_web/utils/custom_text.dart';
 import 'package:bete_tselot_web/utils/image_utils.dart';
 import 'package:bete_tselot_web/utils/static_data.dart';
 import 'package:bete_tselot_web/utils/string_utils.dart';
-import 'package:bete_tselot_web/view/web/web_footer.dart';
+import 'package:bete_tselot_web/view/mobile/app_footer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
-class WebPrivacyPolicyScreen extends StatefulWidget {
-  const WebPrivacyPolicyScreen({super.key});
+class AppPrivacyPolicyScreen extends StatefulWidget {
+  const AppPrivacyPolicyScreen({super.key});
 
   @override
-  State<WebPrivacyPolicyScreen> createState() => _WebPrivacyPolicyScreenState();
+  State<AppPrivacyPolicyScreen> createState() => _AppPrivacyPolicyScreenState();
 }
 
-class _WebPrivacyPolicyScreenState extends State<WebPrivacyPolicyScreen> {
+class _AppPrivacyPolicyScreenState extends State<AppPrivacyPolicyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,10 +31,10 @@ class _WebPrivacyPolicyScreenState extends State<WebPrivacyPolicyScreen> {
                   borderRadius: BorderRadius.circular(10),
                   color: const Color(0xfff5f5f5),
                 ),
-                child:  webTopView()),
+                child: topView()),
 
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 100.w),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Column(
                 children: [
                   SizedBox(height: 15.w,),
@@ -75,8 +75,7 @@ class _WebPrivacyPolicyScreenState extends State<WebPrivacyPolicyScreen> {
             ),
 
             ///Footer
-            const WebFooter()
-
+            const AppFooter(),
           ],
         ),
       )
@@ -105,67 +104,69 @@ class _WebPrivacyPolicyScreenState extends State<WebPrivacyPolicyScreen> {
                   fontWeight: FontWeight.w500,
                   fontFamily: FontUtils.poppins),
               onLoadingBuilder: (context, element, loadingProgress) {
-            return const Center(child: CircularProgressIndicator());
-          }),
+                return const Center(child: CircularProgressIndicator());
+              }),
         ],
       ),
     );
   }
 
-  Padding webTopView() {
+  Padding topView() {
     return Padding(
-      padding: EdgeInsets.only(top: 100.w, bottom: 100.w, left: 140.w,right: 80.w),
+      padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 50.w),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: 500.w,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomText(
-                  StringUtils.privacyPolicy,
-                  fontSize: 28.sp,
-                  fontWeight: FontWeight.bold,
-                  color: ColorUtils.black29,
-                ),
-                SizedBox(
-                  height: 20.w,
-                ),
-                CustomText(
-                    StringUtils.atBeteTselot,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.normal,
-                    color: ColorUtils.black29),
-                SizedBox(
-                  height: 10.w,
-                ),
-                CustomText(
-                    StringUtils.thisPrivacyPolicyOutlines,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.normal,
-                    color: ColorUtils.black29),
-                SizedBox(
-                  height: 10.w,
-                ),
-                CustomText(
-                    StringUtils.wePublishedThisPrivacyPolicy,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.normal,
-                    color: ColorUtils.black29),
-                SizedBox(
-                  height: 15.w,
-                ),
-                CustomText(
-                  StringUtils.published,
-                  fontSize: 16.sp,
-                  letterSpacing: 1.5,
-                  fontWeight: FontWeight.bold,
-                  color: ColorUtils.grey99,
-                ),
-              ],
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CustomText(
+                StringUtils.privacyPolicy,
+                textAlign: TextAlign.center,
+                fontSize: 28.sp,
+                fontWeight: FontWeight.bold,
+                color: ColorUtils.black29,
+              ),
+              SizedBox(
+                height: 20.w,
+              ),
+              CustomText(
+                  StringUtils.atBeteTselot,
+                  fontSize: 14.sp,
+                  textAlign: TextAlign.center,
+                  fontWeight: FontWeight.normal,
+                  color: ColorUtils.black29),
+              SizedBox(
+                height: 10.w,
+              ),
+              CustomText(
+                  StringUtils.thisPrivacyPolicyOutlines,
+                  fontSize: 14.sp,
+                  textAlign: TextAlign.center,
+                  fontWeight: FontWeight.normal,
+                  color: ColorUtils.black29),
+              SizedBox(
+                height: 10.w,
+              ),
+              CustomText(
+                  StringUtils.wePublishedThisPrivacyPolicy,
+                  textAlign: TextAlign.center,
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.normal,
+                  color: ColorUtils.black29),
+              SizedBox(
+                height: 15.w,
+              ),
+              CustomText(
+                StringUtils.published,
+                textAlign: TextAlign.center,
+                fontSize: 16.sp,
+                letterSpacing: 1.5,
+                fontWeight: FontWeight.bold,
+                color: ColorUtils.grey99,
+              ),
+            ],
           )
         ],
       ),

@@ -55,7 +55,7 @@ class WebTopDescriptionView extends StatelessWidget {
                     children: [
                       InkWell(
                         onTap: () async {
-                          final Uri url = Uri.parse('https://apps.apple.com/in/app/bete-tselot/id451350221');
+                          final Uri url = Uri.parse(StringUtils.appStoreLink);
                           if (!await launchUrl(url)) {
                             throw Exception('Could not launch $url');
                           }
@@ -70,7 +70,7 @@ class WebTopDescriptionView extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () async {
-                          final Uri url = Uri.parse('https://play.google.com/store/apps/details?id=com.kiduel.bete_tselot&hl=en&pli=1');
+                          final Uri url = Uri.parse(StringUtils.playStoreLink);
                           if (!await launchUrl(url)) {
                             throw Exception('Could not launch $url');
                           }

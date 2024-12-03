@@ -18,7 +18,11 @@
 //   ];
 // }
 
-import 'package:bete_tselot_web/view/mobile/home_screen.dart';
+import 'package:bete_tselot_web/responsive_layout.dart';
+import 'package:bete_tselot_web/view/mobile/app_privacy_policy.dart';
+import 'package:bete_tselot_web/view/mobile/contact_us/app_contact_us.dart';
+import 'package:bete_tselot_web/view/mobile/home/home_screen.dart';
+import 'package:bete_tselot_web/view/mobile/terms_condition.dart';
 import 'package:bete_tselot_web/view/web/contact_us/web_contact_us.dart';
 import 'package:bete_tselot_web/view/web/home/web_home_screen.dart';
 import 'package:bete_tselot_web/view/web/web_privacy_policy.dart';
@@ -45,32 +49,32 @@ class RouterClass{
     routes: [
       ShellRoute(
         builder: (context, state, child) {
-          return WebTopBar(isFromContact: false,isFromHome: false,child: child,);
+          return WebTopBar(child: child,);
         },
         routes: [
           GoRoute(
             path: getHomeRoute(),
             pageBuilder: (context, state) => const NoTransitionPage(
-              child: WebHomeScreen(),
+              child: ResponsiveLayout(mobileBody: HomeScreen(), desktopBody: WebHomeScreen()),
             ),
           ),
-
           GoRoute(
             path: getContactUsRoute(),
             pageBuilder: (context, state) => const NoTransitionPage(
-              child: WebContactUsScreen(),
+              child: ResponsiveLayout(mobileBody: AppContactUsScreen(), desktopBody: WebContactUsScreen()),
+
             ),
           ),
           GoRoute(
             path: getPrivacyRoute(),
             pageBuilder: (context, state) => const NoTransitionPage(
-              child: WebPrivacyPolicyScreen(),
+              child: ResponsiveLayout(mobileBody: AppPrivacyPolicyScreen(), desktopBody: WebPrivacyPolicyScreen()),
             ),
           ),
           GoRoute(
             path: getTermsConditionRoute(),
             pageBuilder: (context, state) => const NoTransitionPage(
-              child: WebTermsConditionScreen(),
+              child: ResponsiveLayout(mobileBody: AppTermsConditionScreen(), desktopBody: WebTermsConditionScreen()),
             ),
           ),
         ],
@@ -78,35 +82,5 @@ class RouterClass{
     ],
   );
 
-  static final GoRouter appRouter = GoRouter(
-    initialLocation: kIsWeb ? getHomeRoute() : getAppHomeRoute(),
-    routes: [
-      ShellRoute(
-        builder: (context, state, child) {
-          return WebTopBar(child: child,isFromContact: false,isFromHome: false,);
-        },
-        routes: [
-          GoRoute(
-            path: getHomeRoute(),
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: WebHomeScreen(),
-            ),
-          ),
-          GoRoute(
-            path: getAppHomeRoute(),
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: HomeScreen(),
-            ),
-          ),
-          GoRoute(
-            path: getContactUsRoute(),
-            pageBuilder: (context, state) => const NoTransitionPage(
-              child: WebContactUsScreen(),
-            ),
-          ),
 
-        ],
-      ),
-    ],
-  );
 }

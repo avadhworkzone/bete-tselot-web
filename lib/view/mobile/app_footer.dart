@@ -21,7 +21,7 @@ class AppFooter extends StatelessWidget {
         children: [
           SizedBox(height: 30.w,),
           InkWell(onTap: () async {
-            final Uri url = Uri.parse('https://bete-tselot.com/');
+            final Uri url = Uri.parse(StringUtils.logoLink);
             if (!await launchUrl(url)) {
               throw Exception('Could not launch $url');
             }
@@ -98,7 +98,7 @@ class AppFooter extends StatelessWidget {
               Flexible(
                 child: InkWell(
                   onTap: () async {
-                    final Uri url = Uri.parse('https://apps.apple.com/in/app/bete-tselot/id451350221');
+                    final Uri url = Uri.parse(StringUtils.appStoreLink);
                     if (!await launchUrl(url)) {
                       throw Exception('Could not launch $url');
                     }
@@ -115,7 +115,7 @@ class AppFooter extends StatelessWidget {
               Flexible(
                 child: InkWell(
                   onTap: () async {
-                    final Uri url = Uri.parse('https://play.google.com/store/apps/details?id=com.kiduel.bete_tselot&hl=en&pli=1');
+                    final Uri url = Uri.parse(StringUtils.playStoreLink);
                     if (!await launchUrl(url)) {
                       throw Exception('Could not launch $url');
                     }
@@ -129,14 +129,14 @@ class AppFooter extends StatelessWidget {
             ],
           ),
           SizedBox(height: 15.w,),
-          Divider(),
+          const Divider(),
           SizedBox(height: 10.w,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(child: CustomText("Copyright © 2024 Bete Tselot. All Rights Reserved.",color: ColorUtils.grey99,fontSize: 14.sp,)),
+              Expanded(child: CustomText(StringUtils.copyright,color: ColorUtils.grey99,fontSize: 14.sp,)),
               InkWell(onTap: () async {
-                final Uri url = Uri.parse('https://bete-tselot.com/');
+                final Uri url = Uri.parse(StringUtils.logoLink);
                 if (!await launchUrl(url)) {
                   throw Exception('Could not launch $url');
                 }

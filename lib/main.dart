@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:bete_tselot_web/routs/routs.dart';
 import 'package:bete_tselot_web/utils/image_utils.dart';
-import 'package:bete_tselot_web/view/mobile/home_screen.dart';
+import 'package:bete_tselot_web/view/mobile/home/home_screen.dart';
 import 'package:bete_tselot_web/view/web/home/web_home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -34,10 +34,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return LayoutBuilder(builder: (context, constraints) {
-      if(constraints.maxWidth>600){
+
         ///web
         return ScreenUtilInit(
-          designSize: const Size(1466, 932),
+          designSize: constraints.maxWidth < 650 ?  const Size(430, 932) : (constraints.maxWidth >= 650 && constraints.maxWidth < 800) ?const Size(800, 932) :const Size(1466, 932),
           child: MaterialApp.router(
             scrollBehavior: MyCustomScrollBehavior(),
             title: 'Bete Tselot',
@@ -53,26 +53,8 @@ class MyApp extends StatelessWidget {
             // home:  const HoverUnderlineDemo(),
           ),
         );
-      }else{
-        ///mob
-        return ScreenUtilInit(
-          designSize: const Size(430, 932),
-          child: MaterialApp.router(
-            title: 'Bete Tselot',
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-                useMaterial3: true,
-                fontFamily: FontUtils.poppins
-            ),
-            routerConfig: RouterClass.appRouter,
-            // initialRoute: kIsWeb ? RoutesClass.getHomeRoute() : RoutesClass.getAppHomeRoute(),
-            // getPages: RoutesClass.routes,
-            // home: kIsWeb?WebHomeScreen(): const HomeScreen(),
-            // home:  const HoverUnderlineDemo(),
-          ),
-        );
 
-      }
+
     }, );
   }
 }

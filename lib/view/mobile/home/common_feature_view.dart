@@ -2,7 +2,6 @@ import 'package:bete_tselot_web/utils/color_utils.dart';
 import 'package:bete_tselot_web/utils/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../CommonWidgets/common_assets.dart';
 
 class AppCommonFeatureView extends StatelessWidget {

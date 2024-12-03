@@ -39,7 +39,7 @@ class _WebSignUpViewState extends State<WebSignUpView> {
             child: Column(
               children: [
                 CustomText(
-                  "Sign up to receive latest product\nnews, exclusive content & more!",
+                  StringUtils.signUpToReceiveLatestProduct,
                   fontSize: 24.sp,
                   fontWeight: FontWeight.bold,
                   color: ColorUtils.black29,
@@ -55,7 +55,7 @@ class _WebSignUpViewState extends State<WebSignUpView> {
                       Expanded(
                           child: CommonTextField(
                             textEditController: firstnameController,
-                            hintText: "First Name",
+                            hintText: StringUtils.firstName,
                           )),
                       SizedBox(
                         width: 20.w,
@@ -63,7 +63,7 @@ class _WebSignUpViewState extends State<WebSignUpView> {
                       Expanded(
                           child: CommonTextField(
                             textEditController: lastnameController,
-                            hintText: "Last Name",
+                            hintText: StringUtils.lastName,
                           )),
                       SizedBox(
                         width: 20.w,
@@ -71,7 +71,7 @@ class _WebSignUpViewState extends State<WebSignUpView> {
                       Expanded(
                           child: CommonTextField(
                             textEditController: emailController,
-                            hintText: "E-mail address",
+                            hintText: StringUtils.emailAddress,
                           )),
 
                       // Signup Button
@@ -90,7 +90,7 @@ class _WebSignUpViewState extends State<WebSignUpView> {
                   onPressed: () {
                     if(firstnameController.text.isEmpty || lastnameController.text.isEmpty|| emailController.text.isEmpty){
                       Fluttertoast.showToast(
-                          msg: "All Fields are required",
+                          msg: StringUtils.allFieldsAreRequired,
                           toastLength: Toast.LENGTH_LONG,
                           gravity: ToastGravity.CENTER,
                           timeInSecForIosWeb: 2,
@@ -125,7 +125,7 @@ class _WebSignUpViewState extends State<WebSignUpView> {
       lastnameController.clear();
       emailController.clear();
       Fluttertoast.showToast(
-          msg: "Thank you for Sign Up",
+          msg: StringUtils.thankYouForSignUp,
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 2,
@@ -137,7 +137,7 @@ class _WebSignUpViewState extends State<WebSignUpView> {
       lastnameController.clear();
       emailController.clear();
       Fluttertoast.showToast(
-          msg: "Something went Wrong",
+          msg: StringUtils.somethingWentWrong,
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 2,

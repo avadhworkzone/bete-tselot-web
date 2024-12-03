@@ -44,7 +44,7 @@ class _WebContactUsViewState extends State<WebContactUsView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomText(
-                        "We'd love to hear from you!",
+                        StringUtils.weLoveToHereFromYou,
                         fontSize: 16.sp,
                         letterSpacing: 1.5,
                         fontWeight: FontWeight.bold,
@@ -52,13 +52,13 @@ class _WebContactUsViewState extends State<WebContactUsView> {
                       ),
                       SizedBox(height: 20.w,),
                       CustomText(
-                        "Contact Bete Tselot",
+                        StringUtils.contactBeteTselot,
                         fontSize: 28.sp,
                         fontWeight: FontWeight.bold,
                         color: ColorUtils.black29,
                       ),
                       SizedBox(height: 20.w,),
-                      CustomText("If you can’t find the answer to your question in our Help Center or you need to get in touch, send us an email or use the contact form and we will get back to you.",
+                      CustomText(StringUtils.ifYouCanNotFindAns,
                           fontSize: 14.sp,
                           fontWeight: FontWeight.normal,
                           color: ColorUtils.black29),
@@ -99,17 +99,17 @@ class _WebContactUsViewState extends State<WebContactUsView> {
                     children: [
                       CommonTextField(
                         textEditController: firstnameController,
-                        hintText: "Name",
+                        hintText: StringUtils.name,
                       ),
                       SizedBox(height: 10.w,),
                       CommonTextField(
                         textEditController: emailController,
-                        hintText: "Email",
+                        hintText: StringUtils.email,
                       ),
                       SizedBox(height: 10.w,),
                       CommonTextField(
                         textEditController: messageController,
-                        hintText: "Message",
+                        hintText: StringUtils.message,
                         maxLine: 3,
                       ),
                       SizedBox(
@@ -126,7 +126,7 @@ class _WebContactUsViewState extends State<WebContactUsView> {
                               messageController.text.isEmpty ||
                               emailController.text.isEmpty) {
                             Fluttertoast.showToast(
-                                msg: "All Fields are required",
+                                msg: StringUtils.allFieldsAreRequired,
                                 toastLength: Toast.LENGTH_LONG,
                                 gravity: ToastGravity.CENTER,
                                 timeInSecForIosWeb: 2,
@@ -169,7 +169,7 @@ class _WebContactUsViewState extends State<WebContactUsView> {
       messageController.clear();
       emailController.clear();
       Fluttertoast.showToast(
-          msg: "Thank you for Contact Us",
+          msg: StringUtils.thankYouForContactUs,
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 2,
@@ -181,7 +181,7 @@ class _WebContactUsViewState extends State<WebContactUsView> {
       messageController.clear();
       emailController.clear();
       Fluttertoast.showToast(
-          msg: "Something went Wrong",
+          msg: StringUtils.somethingWentWrong,
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 2,

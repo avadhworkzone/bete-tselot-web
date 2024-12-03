@@ -3,6 +3,7 @@ import 'package:bete_tselot_web/utils/color_utils.dart';
 import 'package:bete_tselot_web/utils/custom_text.dart';
 import 'package:bete_tselot_web/utils/image_utils.dart';
 import 'package:bete_tselot_web/utils/static_data.dart';
+import 'package:bete_tselot_web/utils/string_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -29,7 +30,7 @@ class WebReviewView extends StatelessWidget {
               Column(
                 children: [
                   CustomText(
-                    'Your REVIEWS',
+                    StringUtils.yourReviews,
                     fontSize: 15.sp,
                     letterSpacing: 1.5,
                     fontWeight: FontWeight.bold,
@@ -39,7 +40,7 @@ class WebReviewView extends StatelessWidget {
                     height: 10.w,
                   ),
                   CustomText(
-                    'Trusted by thousands',
+                    StringUtils.trustedByThousands,
                     fontSize: 24.sp,
                     fontWeight: FontWeight.bold,
                     color: ColorUtils.black29,
@@ -49,7 +50,7 @@ class WebReviewView extends StatelessWidget {
                   ),
                   RichText(
                     text: TextSpan(
-                      text: '4.9',
+                      text: StringUtils.fourPointNine,
                       style: TextStyle(
                         fontSize: 40.sp,
                         fontWeight: FontWeight.w800,
@@ -57,7 +58,7 @@ class WebReviewView extends StatelessWidget {
                       ),
                       children: <TextSpan>[
                         TextSpan(
-                          text: ' out of 5',
+                          text: StringUtils.outOf5,
                           style: TextStyle(
                               fontWeight: FontWeight.normal,
                               color: ColorUtils.greyaa,
@@ -70,7 +71,7 @@ class WebReviewView extends StatelessWidget {
                     height: 10.w,
                   ),
                   CustomText(
-                    '600,000+ ratings. Here are just some of the kind words we\nhave received.',
+                    StringUtils.ratings,
                     fontSize: 14.sp,
                     textAlign: TextAlign.center,
                     fontFamily: FontUtils.poppins,
@@ -162,74 +163,6 @@ class WebReviewView extends StatelessWidget {
               ),
             ),
           ),
-          // CarouselSlider(
-          //   items:
-          //   testimonials.map((testimonial) {
-          //     return Container(
-          //       padding: const EdgeInsets.all(16),
-          //       margin: const EdgeInsets.symmetric(horizontal: 8),
-          //       decoration: BoxDecoration(
-          //         color: Colors.white,
-          //         borderRadius: BorderRadius.circular(12),
-          //         boxShadow: [
-          //           BoxShadow(
-          //             color: Colors.grey.withOpacity(0.5),
-          //             spreadRadius: 2,
-          //             blurRadius: 5,
-          //             offset: const Offset(0, 3),
-          //           ),
-          //         ],
-          //       ),
-          //       child: Text(
-          //         testimonial,
-          //         style: const TextStyle(fontSize: 16),
-          //         textAlign: TextAlign.center,
-          //       ),
-          //     );
-          //   }).toList(),
-          //   options: CarouselOptions(
-          //     // aspectRatio: 16 / 6, // Adjust aspect ratio as needed
-          //     viewportFraction: 0.1, // Adjust the visible fraction of items
-          //     initialPage: 0,
-          //     enableInfiniteScroll: true,
-          //     autoPlay: false,
-          //     autoPlayInterval: const Duration(seconds: 3),
-          //     autoPlayAnimationDuration: const Duration(milliseconds: 800),
-          //     autoPlayCurve: Curves.fastOutSlowIn,
-          //     enlargeCenterPage: false,
-          //     scrollDirection: Axis.horizontal,
-          //   ),
-          // ),
-          //     // CarouselSlider(
-          //     //     items: [
-          //     //       Container(
-          //     //         // width: 250,
-          //     //         color: Colors.red,
-          //     //         child: Text("hjzghjxbcbxzh bxjkbjkvbj njkxcnjkv nvxjkcbgjkv mnjcxjkv nxjkcv"),
-          //     //       )
-          //     //     ],
-          //     //     options: CarouselOptions(
-          //     //       aspectRatio: 16/2,
-          //     //       viewportFraction:
-          //     //       0.1,
-          //     //       initialPage: 0,
-          //     //       enableInfiniteScroll: true,
-          //     //       reverse: false,
-          //     //       autoPlay: false,
-          //     //       autoPlayInterval:
-          //     //       const Duration(seconds: 3),
-          //     //       autoPlayAnimationDuration:
-          //     //       const Duration(milliseconds: 800),
-          //     //       autoPlayCurve: Curves.fastOutSlowIn,
-          //     //       enlargeCenterPage: false,
-          //     //       // enlargeFactor: 0.3,
-          //     //       onPageChanged: (index, reason) {
-          //     //         /*setState(() {
-          //     //               _currentIndex = index;
-          //     //             });*/
-          //     //       },
-          //     //       scrollDirection: Axis.horizontal,
-          //     //     )),
         ],
       ),
     );
