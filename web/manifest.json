@@ -1,11 +1,11 @@
 {
-    "name": "bete_tselot_web",
-    "short_name": "bete_tselot_web",
+    "name": "Bete Tselot",
+    "short_name": "Bete Tselot",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "This is a bete-tselot website.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
