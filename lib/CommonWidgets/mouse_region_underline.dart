@@ -7,8 +7,8 @@ class HoverUnderlineText extends StatefulWidget {
   const HoverUnderlineText({
     required this.text,
     required this.style,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   _HoverUnderlineTextState createState() => _HoverUnderlineTextState();

@@ -37,11 +37,4 @@ class _AppContactUsScreenState extends State<AppContactUsScreen> {
       ),
     );
   }
-
-
-
-
-
-
-
 }

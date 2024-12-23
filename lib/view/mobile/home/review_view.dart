@@ -103,8 +103,7 @@ class AppReviewView extends StatelessWidget {
                               children: [
                                 Row(
                                   children: List.generate(
-                                    5,
-                                        (index) {
+                                    5,(index) {
                                       return Icon(
                                         Icons.star,
                                         color: ColorUtils.primaryColor,

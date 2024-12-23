@@ -1,11 +1,7 @@
 import 'dart:ui';
-
 import 'package:bete_tselot_web/routs/routs.dart';
 import 'package:bete_tselot_web/utils/image_utils.dart';
-import 'package:bete_tselot_web/view/mobile/home/home_screen.dart';
-import 'package:bete_tselot_web/view/web/home/web_home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';

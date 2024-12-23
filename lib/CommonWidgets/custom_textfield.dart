@@ -1,10 +1,8 @@
-
 import 'package:bete_tselot_web/utils/color_utils.dart';
+import 'package:bete_tselot_web/utils/image_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../utils/image_utils.dart';
 
 typedef OnTap = void Function();
 
@@ -89,7 +87,7 @@ class CommonTextField extends StatelessWidget {
             borderRadius: BorderRadius.circular(10.0),
             borderSide: const BorderSide(
                 color:
-                    ColorUtils.blueC6), // Change the bottom border color here
+                    ColorUtils.whiteColor), // Change the bottom border color here
           ),
           focusedBorder:  OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.0),
